@@ -5,24 +5,33 @@
     <link>https://vibelord-creator.github.io/reading-hub/</link>
     <language>en-us</language>
     <description>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</description>
-    <lastBuildDate>Sun, 19 Apr 2026 21:31:16 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 19 Apr 2026 21:49:23 -0400</lastBuildDate>
     <itunes:author>Anurag Maken</itunes:author>
     <itunes:summary>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</itunes:summary>
+    <itunes:type>episodic</itunes:type>
     <itunes:owner>
       <itunes:name>Anurag Maken</itunes:name>
       <itunes:email>anuragmaken@gmail.com</itunes:email>
     </itunes:owner>
+    <itunes:image href="https://vibelord-creator.github.io/reading-hub/cover.jpg"/>
+    <image>
+      <url>https://vibelord-creator.github.io/reading-hub/cover.jpg</url>
+      <title>Anurag Daily Reading</title>
+      <link>https://vibelord-creator.github.io/reading-hub/</link>
+    </image>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="News"/>
     <itunes:category text="Business"/>
     <item>
-      <title>Daily Reading — 2026-04-19</title>
+      <title>Daily Reading - 2026-04-19</title>
       <description>Daily digest for 2026-04-19. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-04-19.html</description>
       <pubDate>Sun, 19 Apr 2026 05:30:00 -0400</pubDate>
       <guid isPermaLink="false">2026-04-19-Daily_Reading_2026-04-19_v2.mp3</guid>
       <enclosure url="https://vibelord-creator.github.io/reading-hub/Daily_Reading_2026-04-19_v2.mp3" length="6948381" type="audio/mpeg"/>
       <itunes:duration>19:18</itunes:duration>
       <itunes:author>Anurag Maken</itunes:author>
+      <itunes:summary>Daily digest for 2026-04-19. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-04-19.html</itunes:summary>
+      <itunes:image href="https://vibelord-creator.github.io/reading-hub/cover.jpg"/>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>
