@@ -5,7 +5,7 @@
     <link>https://vibelord-creator.github.io/reading-hub/</link>
     <language>en-us</language>
     <description>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</description>
-    <lastBuildDate>Sun, 19 Apr 2026 21:55:15 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2026 10:40:00 -0400</lastBuildDate>
     <itunes:author>Anurag Maken</itunes:author>
     <itunes:summary>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</itunes:summary>
     <itunes:type>episodic</itunes:type>
@@ -26,6 +26,19 @@
     <itunes:category text="Business">
       <itunes:category text="Entrepreneurship"/>
     </itunes:category>
+    <item>
+      <title>Daily Reading - 2026-04-20</title>
+      <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-04-20.html</link>
+      <description>Daily digest for 2026-04-20. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-04-20.html</description>
+      <pubDate>Mon, 20 Apr 2026 05:30:00 -0400</pubDate>
+      <guid isPermaLink="false">2026-04-20-Daily_Reading_2026-04-20.mp3</guid>
+      <enclosure url="https://vibelord-creator.github.io/reading-hub/Daily_Reading_2026-04-20.mp3" length="7674429" type="audio/mpeg"/>
+      <itunes:duration>21:19</itunes:duration>
+      <itunes:author>Anurag Maken</itunes:author>
+      <itunes:summary>Daily digest for 2026-04-20. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-04-20.html</itunes:summary>
+      <itunes:image href="https://vibelord-creator.github.io/reading-hub/cover.jpg"/>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
     <item>
       <title>Daily Reading - 2026-04-19</title>
       <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-04-19.html</link>

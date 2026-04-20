@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — April 20, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Monday, April 20, 2026 — Episode Daily_Reading_2026-04-20.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="6;95" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> By how much did Brent crude climb after the US Navy fired on the Iranian-flagged cargo ship, and where did it land?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: looking for a percentage move and a dollar level.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="wednesday;ceasefire" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> When does the current two-week Iran ceasefire formally lapse?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="166;055;0.55" data-threshold="1">
+    <div class="q-text"><span class="q-num">3.</span> What is the dollar size of the SCOTUS-ordered tariff refund, and roughly what percentage of US GDP does that represent?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="warsh;chair" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> Who is the person now publicly making the case for Fed rate cuts, and what role is he a front-runner for?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="100;2030;ad" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> What is OpenAI's stated aspiration for ChatGPT ad revenue, and by what year?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="hca;hazen" data-threshold="1">
+    <div class="q-text"><span class="q-num">6.</span> Which hospital system CEO appeared on the McKinsey podcast with the "workflow before technology" framing?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="mythos;zero-day;zero day" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What is the codename of Anthropic's unreleased model that found thousands of vulnerabilities across operating systems and browsers, and what class of vulnerabilities were they?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="20;4.5;4x;four" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> How many barrels per day would a full Strait of Hormuz closure remove, and how does that compare to the 1973 OPEC embargo in scale?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="191;278" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> What were the two tension-defining numbers carried over from last week's reading — Bain's 2025 healthcare PE deal value and McKinsey's US PE fundraising figure?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="40;apple;google;amazon" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> How many companies received early patch coordination from Anthropic's Mythos research, and name at least two of the named companies.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="11" data-keys="tariff;sanction;trade;security" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> What does McKinsey's GVAS framework extend, and what four categories of exposure does it layer onto enterprise-value analysis?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="ai;talent;infrastructure;debt" data-threshold="4">
+    <div class="q-text"><span class="q-num">12.</span> Name the four pillars in McKinsey's "Can the US sustain its competitive edge?" frame.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="granular;baghai;smit;viguerie;2008" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> Which classic McKinsey framework does the episode invoke to disaggregate Hormuz exposure sub-segment by sub-segment, and who authored the 2008 book?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="r-star;r star;neutral;productivity" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> Explain the Warsh thesis using the Fed's r-star concept. What does "AI productivity" do to r-star, and why does that make current policy more restrictive than it looks?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="burns;1970;stop;go" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> What historical Fed precedent do sitting FOMC members worry about repeating if they cut into a Hormuz oil shock? (Name the chair and the policy pattern.)</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="value creation;pricing power" data-threshold="1">
+    <div class="q-text"><span class="q-num">16.</span> Which McKinsey framework does the episode apply to the $166B tariff refund to separate "real equity value" importers from "headfake" importers? What is the distinguishing question?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="17" data-keys="april 14;ceasefire;easing;reversed" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> How has the narrative shifted between the April 14 Iran-ceasefire reading (which framed Fed path as unambiguously easing) and today? What specifically has been reversed?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="observ;polic;human" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> How does Hazen's "workflow-first, AI-second" operating thesis map onto the three layers of McKinsey's AI Trust stack from Sunday's episode?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="demograph;inelast;healthcare;sector" data-threshold="2">
+    <div class="q-text"><span class="q-num">19.</span> The tension between Bain's record healthcare PE year ($191B) and McKinsey's decade-low PE fundraising ($278B) resolved last week to "capital is concentrating by sector." Why does today's reading make healthcare PE look defensible under either the Warsh rate-cut path or the Hormuz-premium-sticks path?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="cdmo;refund;domestic;reinvest" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> How should the $166B tariff refund story be stress-tested against last week's CDMO thesis? What is the specific diligence question?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="21" data-keys="pmi;bank;diesel;irr" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> Name the four specific action items for this week from the episode and why each one matters.</div>
+    <textarea placeholder="Your answer" rows="5"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="one;three;powell;warsh" data-threshold="3">
+    <div class="q-text"><span class="q-num">22.</span> If you touched an LBO model this month that assumed three cuts in 2026, what is the specific Monday-morning action item from the episode, and what are the two base cases you need to run?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "Brent crude climbed ~6% to roughly $95 per barrel. S&P 500 futures fell ~1%; European STOXX 600 down >1%.",
+  2: "Wednesday of this week. The ceasefire is two weeks old and lapses Wednesday.",
+  3: "$166B in refunds (~0.55% of US GDP) — landing as a one-time corporate windfall starting Monday via an electronic refund system.",
+  4: "Kevin Warsh — widely viewed as a front-runner to become Fed chair under the Trump administration.",
+  5: "$100 billion in ChatGPT ad revenue by 2030 — approximately one-third of Google's current ad take.",
+  6: "Sam Hazen, CEO of HCA Healthcare — the largest for-profit US hospital operator.",
+  7: "Codename 'Mythos'. Class: zero-day vulnerabilities across every major OS and browser. Coordinated early patches with 40 companies including Apple, Google, and Amazon.",
+  8: "A full Hormuz closure would remove ~20 million bbl/day — more than 4x the 1973 OPEC embargo (which removed ~4.5M bbl/day, or 7% of global supply).",
+  9: "Bain: $191B 2025 healthcare PE deal value (445 buyouts, 2nd-highest ever). McKinsey: $278B US PE fundraising (decade low). The resolution: capital is concentrating by sector.",
+  10: "40 companies, including named examples Apple, Google, and Amazon, received early patch access before public disclosure.",
+  11: "GVAS extends the classic Value at Risk (VaR) framework. It layers four categories of exposure: (1) trade, (2) tariff, (3) sanctions, (4) security — onto enterprise-value analysis at the business-unit level.",
+  12: "(1) AI / frontier compute. (2) Talent. (3) Infrastructure. (4) Debt / fiscal trajectory. Reads as an update to MGI 'Arenas of Competition.'",
+  13: "Granularity of Growth, by Baghai, Smit, and Viguerie (McKinsey, 2008). Disaggregate exposure to the sub-segment level before allocating capital — which is structurally what GVAS formalizes.",
+  14: "r-star is the neutral real short-rate that neither stimulates nor restrains the economy. Warsh argues AI-driven productivity has raised potential GDP growth by roughly half a point, which moves r-star up by the same amount. At today's funds rate, policy is therefore more restrictive than it appears — meaning you can cut without re-igniting inflation.",
+  15: "Arthur Burns / 1970s stop-and-go rate cycle. Burns cut rates into supply shocks, which re-ignited inflation expectations and ultimately required the Volcker regime to break. Sitting FOMC members do not want to repeat that pattern.",
+  16: "McKinsey's Value Creation Framework. Distinguishing question: which importers have genuine pricing power (category leaders, differentiated brands, duopolies) and will keep the refund as margin — versus which will give it back through price competition, producing multi-quarter margin compression for smaller competitors.",
+  17: "April 14 framed Fed path as 'unambiguously easing' because the ceasefire had cut oil from $104 to the mid-$90s, unwinding the stagflation base case. Today the US-Iran naval incident + Brent +6% to ~$95 + threatened strikes if ceasefire lapses Wednesday have substantially reversed that easing narrative in six days.",
+  18: "(1) Observability — Hazen insists on workflow-level visibility into what the AI is doing before clinical deployment. (2) Policy engines — HCA sets rules/guardrails for where AI is allowed. (3) Human-in-the-loop — clinical AI only ships with clinician checkpoints at high-risk steps. That is why HCA's rollout is slow but sustainable compared to peers chasing demo-day ROI.",
+  19: "Under the Warsh path: rate cuts improve LBO debt coverage and make healthcare PE more attractive on top of demographic tailwinds. Under the Hormuz-sticks path: healthcare has inelastic demand that does not require cooperative rates to grow. Either way, the sector-concentration thesis holds — healthcare is defensible.",
+  20: "If importers of patented-pharma APIs get a share of the $166B refund, some will reinvest into domestic CDMO capacity (accretive to US-capacity-today winners) and some will send the refund back to the existing offshore supply chain (less accretive). Diligence question: which CDMOs are receiving refund dollars, and are they being reinvested into capacity?",
+  21: "(1) Tuesday flash PMI (especially services) — tells you if bond market capitulates first. (2) Midweek large bank earnings — loan-loss provisions and CRE commentary = read on real credit cycle. (3) Diesel/jet-fuel pass-through exposure in portfolio — if Brent holds above $90 another two weeks, margin hit in Q2. (4) Two partner-quality talking points preloaded — GVAS and the Warsh-one-sentence r-star thesis.",
+  22: "Rerun the model with TWO base cases: (a) Powell-holds scenario — one cut in 2026. (b) Warsh-confirmed scenario — three to four cuts. Quantify the IRR delta and show it to the IC on Wednesday."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Tuesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
