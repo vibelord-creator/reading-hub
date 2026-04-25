@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — April 25, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Saturday, April 25, 2026 — Episode Daily_Reading_2026-04-25.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="50;64" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> Per McKinsey's State of AI in Healthcare, what share of US healthcare organizations are actively implementing generative AI, and what share report positive ROI?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="1390;3071" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> What were Foundayo's first-week prescriptions, and how did Novo's oral Wegovy launch week compare?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="25;149;245" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> What are Foundayo's three current price points (commercial, self-pay, Medicare)?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="106;3.3;late 2026" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> What is Friday's Brent close, March CPI year-over-year, and the Reuters consensus on the next Fed cut?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="82.7;74" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> What is GPT-5.5's Terminal-Bench 2.0 score, and what is its long-context (MRCR v2 at 1M tokens) score?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="64.3;79.1" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What are Claude Opus 4.7's leading benchmark scores on SWE-bench Pro and MCP-Atlas?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="1.15;650;500" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What was the total deal value, upfront payment, and earnout structure for the Advanced Care Partners exit?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="191;445" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> What was 2025's healthcare PE disclosed deal value and number of buyouts per Bain?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="150;250" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> Per the McKinsey "Beating the odds" piece, what is the IRR penalty (in basis points) for each year of delayed PE exit?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="2.3;94" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> What is the average enterprise governance maturity score for agentic AI (out of 5), and what share of orgs flag agent sprawl as a concern?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="11" data-keys="three horizon;copilot;agent;autonomous" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> Which McKinsey framework does the agentic-AI marketing piece invoke, and how do its three horizons map to marketing applications?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="chip;infrastructure;model;data;application" data-threshold="4">
+    <div class="q-text"><span class="q-num">12.</span> Name the five layers of McKinsey's stack-layer sovereign AI matrix.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="value creation;24;exit-readiness;buyer-pool" data-threshold="3">
+    <div class="q-text"><span class="q-num">13.</span> Per McKinsey's "Beating the odds," what are the three differentiators between top-quartile and bottom-quartile PE exit performance?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="revenue;distance;severity" data-threshold="3">
+    <div class="q-text"><span class="q-num">14.</span> What is the formula for McKinsey's Geopolitical Value at Stake (GVaS) framework, and how is each variable scored?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="point-tool;modular;architect" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> What is the McKinsey-identified bifurcation that will separate winning from losing health systems over the next 12-18 months?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="16" data-keys="1979;volcker;supply;tighten" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> What is the historical parallel for today's stagflation debate, and what is the modern counterargument to the textbook playbook?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="cold chain;small molecule;manufactur;emerging" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> Why does Foundayo being a small molecule (vs Wegovy/Ozempic peptides) matter structurally for the global GLP-1 market beyond the US headline numbers?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="viking;structure;m&a;premium;reset" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> If commercial GLP-1 ASPs compress 20-35% by 2028, why does this make Viking and Structure Therapeutics MORE valuable, not less?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="governance;identity;orchestration;model" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> The episode argues the binding constraint on enterprise agentic AI has migrated. From what to what? And what investable layer does this point to?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="2010;2013;walmart;ecommerce;modular" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> What historical analog from retail e-commerce does the episode use to argue against buying point-tool healthcare AI vendors? Which provider-side investment shape does it favor?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="21" data-keys="zero;cut;floor;two" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> What rate-cut scenario should now serve as the LBO base case, and what is the upside scenario? What does the IRR delta between them mean in EV terms?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="brent;110;breakeven;2.6" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> What two market signals does the episode name as the cleanest tape to watch for the late-2026 cut path holding or slipping?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Sunday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "50%+ of US healthcare organizations are now implementing gen AI (up from ~20% a year ago); 64% report positive ROI. McKinsey calls this the pilot-to-integration inflection.",
+  2: "Foundayo: 1,390 prescriptions in week 1. Novo oral Wegovy: 3,071 in its launch week. Likely reflects brand-name unfamiliarity rather than clinical preference.",
+  3: "$25/mo with commercial coverage, $149/mo self-pay, $245/mo Medicare Part D (with $50 senior copay).",
+  4: "Brent: $106/bbl Friday close. March CPI: 3.3% YoY. Reuters consensus: first Fed cut delayed to late 2026 (six+ months out), driven by war-related energy inflation.",
+  5: "GPT-5.5 leads Terminal-Bench 2.0 at 82.7% and scores 74.0% on MRCR v2 at 1M tokens (up from 36.6% on v1 — more than doubled long-context performance).",
+  6: "Claude Opus 4.7: 64.3% on SWE-bench Pro (frontier lead), 79.1% on MCP-Atlas. Anthropic still owns multi-tool orchestration.",
+  7: "$1.15B total: $650M upfront + up to $500M in earnouts. Afterburner Capital Partners and Council Capital exited Advanced Care Partners (pediatric/adult private-duty nursing).",
+  8: "$191B disclosed deal value; 445 buyouts (second-highest annual total ever).",
+  9: "150–250 basis points (1.5–2.5 percentage points) of IRR penalty per additional year of hold, depending on entry vintage.",
+  10: "Governance maturity averages 2.3/5 across 500 enterprises. 94% of orgs flag agent sprawl as a concern. Only 22% treat agents as identity-bearing entities.",
+  11: "Three Horizons. H1 = campaign-copilots (10–15% productivity uplift). H2 = agent-orchestrated personalization (20–30% revenue uplift). H3 = autonomous brand operations (30–50% growth uplift). Blocking constraints: governance, attribution, brand-safety guardrails.",
+  12: "(1) Chips. (2) Infrastructure. (3) Models. (4) Data. (5) Applications. The practical playbook is selective control — model + data sovereignty are non-negotiable; chips/infra can still rent from hyperscalers.",
+  13: "(1) A 24-month value-creation playbook executed from Day 1. (2) Explicit exit-readiness milestones (audit, KPI hygiene, management succession). (3) Early buyer-pool shaping starting 18 months before launch (not reactive process).",
+  14: "GVaS = Revenue × Geopolitical Distance (0–10, scored on UN voting alignment) × Severity (0–1, where active export controls = 1, stabilizing trade agreements = 0).",
+  15: "Point-tool buyers vs modular architecture builders. Health systems that buy single-vendor copilots accumulate integration debt; those that build modular agent platforms collapse the marginal cost of adding new agents and compound advantage.",
+  16: "1979 oil shock + Volcker (Fed funds to 20% in 1981 to break inflation). Modern counterargument: supply-driven inflation should be tolerated, not tightened against — rate hikes don't add a barrel of oil. McKinsey's GVaS framework is the practitioner answer (quantify enterprise exposure rather than betting on a single Fed path).",
+  17: "(1) Small molecule = orally stable, no peptide stomach degradation. (2) Cheaper to manufacture by an order of magnitude. (3) No cold-chain logistics required. (4) Scalable to billions of doses globally — opens emerging markets where injectable cold chain was never viable. The TAM expansion is global, not just US-priced.",
+  18: "Counterintuitively MORE valuable. ASP compression amplifies the strategic value of NEW molecules with differentiated profiles (better tolerability, dosing, co-formulation). Big Pharma can't price-protect Wegovy/Ozempic indefinitely, so the M&A premium for next-gen mechanisms rises. Watch for Lilly to make a third bolt-on after Centessa.",
+  19: "From model quality to governance maturity. GPT-5.5 and Opus 4.7 push the model frontier (1M-token context, MCP-Atlas leadership) but governance maturity at 2.3/5 is the constraint. The investable layer is identity, audit, and orchestration tooling — not foundation models.",
+  20: "2010–2013 retail e-commerce: firms that bought best-of-breed point solutions for search/recommendations/checkout (Endeca, ATG) fell behind firms that built composable stacks (Walmart Labs). Apply to healthcare: PE should underwrite platform companies that abstract orchestration, not vertical AI tools that solve one workflow.",
+  21: "Base case: zero rate cuts in 2026 (the late-2026 floor). Upside: two cuts. The IRR delta between zero and two cuts at typical exit multiples (~11–12x EBITDA) is roughly half a turn of EV. Both branches must be shown to the IC.",
+  22: "(1) Brent crude — above $110 and the late-2026 cut slips again; below $95 and the cut window opens back up. (2) The 5-year breakeven inflation rate — sustained above 2.6% and JPMorgan's zero-cut-then-hike call becomes consensus."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Sunday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
