@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — May 4, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Monday, May 4, 2026 — Episode Daily_Reading_2026-05-04.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="3.50;3.75;april 29;four-way" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> What rate band did the FOMC hold the federal funds rate at on April 29, and how was the vote split?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: looking for both the band and the split structure.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="board;not just;chair" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> Powell's exit is structurally different from a simple chair retirement. What is the key distinction the Wall Street Journal flagged?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="63;59;tirzepatide;semaglutide" data-threshold="3">
+    <div class="q-text"><span class="q-num">3.</span> What is the wholesale revenue for tirzepatide (Lilly) and semaglutide (Novo) cited in the Detroit News piece, and which is number one?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="1;trillion;13;915" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> What is the projected 2026 US prescription drug spend total, and what was the 2025 number plus its growth rate?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="40;60" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> What gross-to-net rebate range applies to GLP-1s, and what does that imply for tirzepatide net revenue?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="30;60;cost-to-collect;collect" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What cost-to-collect compression band did McKinsey's 2025 RCM survey identify, and why is the band intentionally wide?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="3.6;2;economist" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What level did The Economist's predictive consumer-price index reach this week, and what is the Fed's official target?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="300;million;surveillance;dragnet" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> Approximately how many people's data does the federal immigration-surveillance architecture (the WSJ "Surveillance Dragnet") cover?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="harvest;decrypt;5;10" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> What is the "harvest now, decrypt later" attack model McKinsey describes, and on what time horizon are adversaries betting?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="10" data-keys="touchless;intake;adjudication;cash;posting" data-threshold="3">
+    <div class="q-text"><span class="q-num">10.</span> Name the McKinsey operating model for AI-native back-office in healthcare, and the three end-to-end stages it automates.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="control;data;governance" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> Name the three planes in McKinsey's "Rewired" agentic-AI architecture stack.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="inventory;migration;governance;crypto" data-threshold="3">
+    <div class="q-text"><span class="q-num">12.</span> Name the three steps in McKinsey's Crypto-Agility Maturity Model for post-quantum migration.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="mission;adjusted;synergy;asset" data-threshold="3">
+    <div class="q-text"><span class="q-num">13.</span> What McKinsey framework treats organizational mission as a measurable carrying value during M&A, and what's the framework innovation?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="three;horizons;productivity;offering;business model" data-threshold="3">
+    <div class="q-text"><span class="q-num">14.</span> Per McKinsey's Three Horizons for AI value creation, why is productivity AI insufficient for durable advantage, and where does durable advantage live?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="compute;models;data;deployment;sovereign" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> What four layers does sovereign AI control, per McKinsey's explainer, and what's the historical parallel they draw?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="16" data-keys="warsh;productivity;cover;veto" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> How does today's Powell departure connect to the April 20 Key Themes entry on Kevin Warsh and AI productivity?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="surveillance;govtech;sovereignty;index" data-threshold="3">
+    <div class="q-text"><span class="q-num">17.</span> How does the McKinsey sovereign AI explainer thread to (a) today's OpenAI IPO pressure / index-rule reshaping article and (b) Friday's WSJ A1 surveillance dragnet feature? What's the common thread?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="245;part d;coverage;part-d;medicare" data-threshold="2">
+    <div class="q-text"><span class="q-num">18.</span> Today's $1T Rx headline confirms volume. List at least three prior data points across the GLP-1 reimbursement narrative arc since April 1 that set up this confirmation.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="multiple;compression;benchmark;passive" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Why is the OpenAI IPO described as a multiple compression event for the long tail of agent startups rather than a multiple expansion event?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="control;plane;operating;model;workflow;integrator" data-threshold="3">
+    <div class="q-text"><span class="q-num">20.</span> Per the deep dive, why is RCM the cleanest test case for whether agentic AI delivers operating leverage in healthcare? What's the screening flag for a target?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch / do)</h2>
+
+  <div class="q" data-id="21" data-keys="esmer;7510;touchless;rewired" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> What two McKinsey frameworks does the episode flag as the most useful vocabulary to carry into the FNCE 7510 Esmer Advanced PE block week, and why?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="jobs;cpi;curve;regime" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> What are the two macro prints the episode says will test the Fed regime-change thesis, and what is the implied curve repricing risk if both come in dovish-supportive?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Tuesday morning before Esmer's first session.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday on the train.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const ANSWERS = {
+  1: "3.50–3.75% federal funds rate band. The vote was a four-way split: one dissent for a 25bp cut and three additional dissents on the easing-bias language. The split was on guidance, not just the level — structurally more dovish than a clean hold.",
+  2: "Powell is exiting the Fed board entirely, not just stepping down as chair. The WSJ frames it as a forced choice driven by Trump-administration legal pressure rather than a personal preference. He loses any ongoing institutional voice, not just the chair seat.",
+  3: "Tirzepatide (Lilly: Zepbound + Mounjaro): ~$63B wholesale, the #1 selling drug in America. Semaglutide (Novo: Ozempic + Wegovy): ~$59B, #2. A consumer weight drug is now top of the US formulary — that has never been true before.",
+  4: "2026 crosses $1 trillion in total US prescription drug spend. 2025 was ~$915B, up roughly 13% year over year. Composition matters more than the headline: GLP-1s drove much of that growth.",
+  5: "Gross-to-net rebates on GLP-1s run ~40–60%. So $63B wholesale tirzepatide ≈ $25–38B net. Net pricing — not wholesale — is what drives multiple compression in payer-exposed adjacencies (compounding pharmacy, weight-management services).",
+  6: "30–60% cost-to-collect compression. The band is intentionally wide: the low end is what bolting agents onto a legacy stack delivers; the high end requires redesigning the operating model around the agents (touchless RCM as operating model, not point solution).",
+  7: "3.6% predictive CPI vs. the Fed's 2% target — a 160bps overshoot. The predictive index uses real-time commodity and retail signal to lead the official BLS print, so it is calling a print that has not yet happened.",
+  8: "More than 300 million people — effectively the entire US population. The system integrates addresses, social media, vehicles, flight history, and law-enforcement records via commercial data brokers. The system is not narrowly tailored to immigration enforcement.",
+  9: "Adversaries intercept and store encrypted traffic today, betting that cryptographically relevant quantum machines arrive in 5–10 years to decrypt it. For data with long sensitivity tails (genomic, longitudinal EHR, IP, government archives) the breach has effectively already occurred — you just don't know which records are in the harvest yet.",
+  10: "Touchless Revenue Cycle. Three end-to-end stages: claim intake → adjudication → cash posting, all fully automated. Human work moves to exceptions only.",
+  11: "Control plane (orchestration), data plane (agent identity, model routing, semantic layer), governance plane (audit, cost attribution, policy). All three are prerequisites before agents scale safely.",
+  12: "(1) Cryptographic inventory — what crypto is where, and on what data. (2) Migration sequencing — risk-based prioritization of which systems and crown-jewel data move first. (3) Governance — policy, ongoing crypto-agility, and audit. McKinsey's adaptation of NIST PQC transition guidance.",
+  13: "Mission-Adjusted Synergy Model. The framework innovation is treating mission as an asset class with measurable carrying value (analogous to brand equity in commercial deals) rather than as a soft factor — so mission preservation gets underwritten in the deal model rather than vetoed sentimentally.",
+  14: "Productivity AI gains commoditize fast — once foundation-model access is broadly available, copilot-driven cost-out gets competed away. Durable advantage lives at H2/H3: reshaping offerings and business models, using AI to create products that weren't previously economically possible. H1 productivity is table stakes; H2/H3 offering reinvention is where rents accrue.",
+  15: "Compute, models, data, and deployment — within national borders. Historical parallel: 1950s–60s national-champion debate over telephony (AT&T's Bell System) and aerospace, where market efficiency and national autonomy diverged. Strategic infrastructure where the two goals don't align.",
+  16: "Warsh's argument was that AI-driven productivity gains lower the inflationary cost of rate cuts, providing intellectual cover for pre-cutting into a potential energy shock. Powell's exit removes the institutional voice that would have pushed back. The dovish path now has both the intellectual cover (Warsh) and fewer veto points (post-Powell board).",
+  17: "Common thread: control of the stack as industrial policy. (a) Index providers contorting eligibility rules to admit OpenAI/SpaceX is de facto industrial policy routed through capital markets. (b) The 300M-person federal data fabric is sovereign control of the data layer. McKinsey's sovereign AI frame (compute, models, data, deployment) names what both stories are doing.",
+  18: "Anchor points: (1) Apr 1 Medicare Part D coverage starting at $245/mo payer / $50 senior copay. (2) Apr 25 Foundayo $25 (commercial) / $149 (self-pay) oral launch. (3) Mar 30 Lilly–Insilico AI drug discovery deal. (4) Late-April Novo phased 50% list-price cut by 2027. The price–volume–coverage triangle locked in before today's $1T headline confirmed the volume side.",
+  19: "Until OpenAI prints, the last marker for AI valuation is whatever the last private round was. Once it prints, three things happen: every Series C agentic-platform raise gets benchmarked off OpenAI's public revenue multiple (lower than current private comps); index inclusion creates a passive-flow benchmark cap rather than a private-market premium; the platform layer becomes a public-market discipline category — which makes picks-and-shovels (governance, cost attribution, model routing) more defensibly investable than the long tail of agent startups.",
+  20: "RCM is the only healthcare function where cost-to-collect is a directly measurable line item on the provider's P&L; every other function is mediated by quality or outcomes that are slow and noisy. So RCM is the cleanest test of whether agentic AI delivers real operating leverage. Screening flag: if a target's RCM still has humans on every claim, that's a flag, not a thesis. Winners are running their own engineering teams (workflow integrators), not reselling third-party AI on top of legacy workflows.",
+  21: "(1) Touchless Revenue Cycle — McKinsey's named operating model for AI-native back-office. (2) Rewired three-plane stack — control / data / governance. Both vocabularies map directly to healthcare-services value-creation cases that are likely to come up in Esmer's Advanced PE classroom. The right answer in 2026 is operating-model redesign around agentic AI, not point-solution adoption layered on legacy.",
+  22: "Friday's April jobs report and the next CPI print. If the jobs print is soft (NFP weak, unemployment ticks up) and CPI is hot, the post-Powell committee has both excuses to cut. Implied risk: a meaningful curve repricing on the front end, fatter dovish tail, and IG credit has not yet priced the regime-change risk premium."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. Brief-a-partner-Tuesday-morning ready before Esmer's first session.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Tuesday on the train.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
