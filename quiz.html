@@ -159,9 +159,9 @@
     <h1>Daily Reading Comprehension Quiz</h1>
     <div class="sub">Monday, May 4, 2026 — Episode Daily_Reading_2026-05-04.mp3</div>
     <div class="meta">
-      <span>22 questions</span>
+      <span>25 questions</span>
       <span>4 sections</span>
-      <span>Suggested time: 10–12 min</span>
+      <span>Suggested time: 12–15 min</span>
     </div>
   </header>
 
@@ -225,6 +225,18 @@
 
   <div class="q" data-id="9" data-keys="harvest;decrypt;5;10" data-threshold="2">
     <div class="q-text"><span class="q-num">9.</span> What is the "harvest now, decrypt later" attack model McKinsey describes, and on what time horizon are adversaries betting?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9b" data-keys="seven;14;board;chair;rotate" data-threshold="2">
+    <div class="q-text"><span class="q-num">9b.</span> Basics check — How many governors sit on the Federal Reserve Board, what is their term length, and how many of the twelve voting FOMC seats are board governors versus regional Fed presidents?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9c" data-keys="rebate;net;average;asp;volume" data-threshold="2">
+    <div class="q-text"><span class="q-num">9c.</span> Basics check — Define ASP (average selling price) and explain why wholesale revenue is a misleading number for valuing a drug maker.</div>
     <textarea placeholder="Your answer"></textarea>
     <div class="feedback"></div>
   </div>
@@ -313,9 +325,15 @@
     <div class="feedback"></div>
   </div>
 
+  <div class="q" data-id="23" data-keys="front;short;two;five;sensitive" data-threshold="2">
+    <div class="q-text"><span class="q-num">23.</span> Basics check — What does "front-end curve repricing" mean, and which treasury maturities are most sensitive?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
   <div class="score-panel" id="scorePanel">
     <div>Score</div>
-    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 25 correct · <span id="scorePartial">0</span> partial</div>
     <div class="score-detail" id="scoreDetail"></div>
     <div class="bucket" id="scoreBucket"></div>
   </div>
@@ -329,10 +347,10 @@
   <div class="scoring-guide">
     <h3>Self-scoring buckets</h3>
     <ul>
-      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Tuesday morning before Esmer's first session.</li>
-      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
-      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
-      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday on the train.</li>
+      <li><strong>20–25 correct:</strong> You internalized the material. You could brief a partner Tuesday morning before Esmer's first session.</li>
+      <li><strong>14–19 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>8–13 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday on the train.</li>
     </ul>
   </div>
 </div>
@@ -360,7 +378,10 @@ const ANSWERS = {
   19: "Until OpenAI prints, the last marker for AI valuation is whatever the last private round was. Once it prints, three things happen: every Series C agentic-platform raise gets benchmarked off OpenAI's public revenue multiple (lower than current private comps); index inclusion creates a passive-flow benchmark cap rather than a private-market premium; the platform layer becomes a public-market discipline category — which makes picks-and-shovels (governance, cost attribution, model routing) more defensibly investable than the long tail of agent startups.",
   20: "RCM is the only healthcare function where cost-to-collect is a directly measurable line item on the provider's P&L; every other function is mediated by quality or outcomes that are slow and noisy. So RCM is the cleanest test of whether agentic AI delivers real operating leverage. Screening flag: if a target's RCM still has humans on every claim, that's a flag, not a thesis. Winners are running their own engineering teams (workflow integrators), not reselling third-party AI on top of legacy workflows.",
   21: "(1) Touchless Revenue Cycle — McKinsey's named operating model for AI-native back-office. (2) Rewired three-plane stack — control / data / governance. Both vocabularies map directly to healthcare-services value-creation cases that are likely to come up in Esmer's Advanced PE classroom. The right answer in 2026 is operating-model redesign around agentic AI, not point-solution adoption layered on legacy.",
-  22: "Friday's April jobs report and the next CPI print. If the jobs print is soft (NFP weak, unemployment ticks up) and CPI is hot, the post-Powell committee has both excuses to cut. Implied risk: a meaningful curve repricing on the front end, fatter dovish tail, and IG credit has not yet priced the regime-change risk premium."
+  22: "Friday's April jobs report and the next CPI print. If the jobs print is soft (NFP weak, unemployment ticks up) and CPI is hot, the post-Powell committee has both excuses to cut. Implied risk: a meaningful curve repricing on the front end, fatter dovish tail, and IG credit has not yet priced the regime-change risk premium.",
+  "9b": "7 governors, each on a 14-year term, appointed by the President and confirmed by the Senate. The Chair holds a separate 4-year term within that 14-year governorship. The FOMC has 12 voting seats: 7 board governors + 1 New York Fed President (permanent) + 4 rotating regional Fed presidents.",
+  "9c": "ASP = average selling price = the volume-weighted price net of rebates that drug companies actually realize. Wholesale revenue is the gross list-price number before payer rebates. Because GLP-1 gross-to-net rebates run 40–60%, wholesale dramatically overstates what flows to the drug maker's profit line and to the multiple a buyer would pay.",
+  23: "Front-end curve repricing means the short-maturity end of the treasury yield curve moves to reflect new Fed policy expectations. The 2-year and 5-year treasuries are most sensitive because they are dominated by Fed expectations rather than long-run inflation/term premium considerations. A dovish surprise pulls 2y/5y yields down sharply; a hawkish surprise pushes them up."
 };
 
 function normalize(str) {
@@ -419,65 +440,3 @@ function gradeOne(qEl) {
 
 function grade() {
   const qs = document.querySelectorAll(".q");
-  let correct = 0;
-  let partial = 0;
-  let missed = 0;
-  qs.forEach((q) => {
-    const cat = gradeOne(q);
-    if (cat === "correct") correct++;
-    else if (cat === "partial") partial++;
-    else missed++;
-  });
-  const total = qs.length;
-
-  const panel = document.getElementById("scorePanel");
-  panel.classList.add("show");
-  document.getElementById("scoreCorrect").textContent = correct;
-  document.getElementById("scorePartial").textContent = partial;
-  document.getElementById("scoreDetail").textContent =
-    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
-
-  let bucketText = "";
-  if (correct >= 17) {
-    bucketText = "Bucket: 17–22 — You internalized the material. Brief-a-partner-Tuesday-morning ready before Esmer's first session.";
-  } else if (correct >= 12) {
-    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
-  } else if (correct >= 7) {
-    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
-  } else {
-    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Tuesday on the train.";
-  }
-  document.getElementById("scoreBucket").textContent = bucketText;
-
-  panel.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function reset() {
-  document.querySelectorAll(".q").forEach((q) => {
-    q.querySelector("textarea").value = "";
-    const fb = q.querySelector(".feedback");
-    fb.className = "feedback";
-    fb.innerHTML = "";
-  });
-  const panel = document.getElementById("scorePanel");
-  panel.classList.remove("show");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-document.getElementById("gradeBtn").addEventListener("click", grade);
-document.getElementById("resetBtn").addEventListener("click", reset);
-
-const progress = document.getElementById("progressText");
-function updateProgress() {
-  const tas = document.querySelectorAll("textarea");
-  let filled = 0;
-  tas.forEach((t) => { if (t.value.trim()) filled++; });
-  progress.textContent = `${filled} / ${tas.length} answered`;
-}
-document.querySelectorAll("textarea").forEach((t) => {
-  t.addEventListener("input", updateProgress);
-});
-updateProgress();
-</script>
-</body>
-</html>
