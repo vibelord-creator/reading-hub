@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — May 6, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Wednesday, May 6, 2026 — Episode Daily_Reading_2026-05-06.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="8;101" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> By how much did Brent crude fall this morning, and to what level?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: looking for percentage and price.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="6;4.35" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> How many basis points did the 10-year Treasury yield fall this morning, and to what level?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="10;7.2;50" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> Australia committed how many Australian dollars (and how many US dollars) to its new fuel reserve, and how many days of stockpile is that?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="10-S;semiannual;semi-annual;60" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> What new SEC form would replace the 10-Q under the May 5 proposal, and what is the comment-period length?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="1.03;115;71" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> What was Apollo's reported AUM, total Q1 inflows, and origination volume?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="2;65;1.3" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> By what factor did Novo's oral Wegovy beat Q1 expectations, what share of new US GLP-1 scripts does Wegovy hold, and how many oral prescriptions were filled?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="13.2;53.7;1.5" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> Uber Q1 2026: revenue, gross bookings, and the size of the equity-revaluation hit on net income.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="1.9;27;sebetralstat;HAE;hereditary" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> Chiesi acquired KalVista for what dollar amount, at what per-share price, and what is the asset's clinical use?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="246;Capital Solutions" data-threshold="1">
+    <div class="q-text"><span class="q-num">9.</span> What Apollo line item set an all-time high in Q1, and at what level (in millions)?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="1970;Penn Central;Budge" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> What year did the SEC first mandate quarterly reporting, and what specific failure mode triggered the rule? (Bonus: which commissioner pushed it?)</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="11" data-keys="model;adoption;operational;strategic;financial" data-threshold="4">
+    <div class="q-text"><span class="q-num">11.</span> Name the five layers of McKinsey's AI Measurement Stack, in order.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="productivity;workflow;business model" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> Apply McKinsey's Three Horizons to AI: what sits in Horizon 1, Horizon 2, and Horizon 3?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="legacy;bolt;debt;re-platform;replatform" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> Define "AI debt" per the Rewired second edition. What share of enterprises is McKinsey saying is accumulating it?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="adoption;layer 2;rate-limit;rate limit" data-threshold="1">
+    <div class="q-text"><span class="q-num">14.</span> Per the Five-Layer Measurement framework, which layer is the rate-limiting failure point, and why does that change the diligence question?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="reflation;yield;duration;staples;airline" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> Name the three legs of the textbook reflation-pause trade that played out this morning on the oil drop.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="16" data-keys="Powell;regime;deregulator;disclosure;information asymmetr" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> Connect the May 4 Powell departure to today's SEC quarterly-reporting proposal. What is the connective tissue for an investment-committee memo?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="oral;ASP;rebate;PBM;average selling price;step-down;stepdown" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> How does today's Wegovy-pill outperformance update the May 4 thesis on $1T US Rx spend? Specifically, what changes about the channel-mix and ASP path?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="Touchless;three-plane;Five-Layer;Three Horizons" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> List the four McKinsey frameworks introduced over the past two weeks that together form the AI value-capture vocabulary ladder.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="stockpil;sovereign;structural bid;reserve;China" data-threshold="2">
+    <div class="q-text"><span class="q-num">19.</span> Why is the right read of this morning's oil drop "two-handed"? What is the structural bid that persists even as the war premium drains?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="origination;syndicated;mid-market;flow" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> Why is Apollo's $71B origination number more diagnostic for the macro than the AUM milestone? Use the syndicated-loan comparison from the episode.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="21" data-keys="Brent;ten-Q;Apollo;McKinsey;walk" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> Name at least three of the five action items the episode flagged for today.</div>
+    <textarea placeholder="Your answer" rows="5"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="weighted-average;weighted average;spread;origination" data-threshold="1">
+    <div class="q-text"><span class="q-num">22.</span> When Apollo's 10-Q drops this afternoon, what specific disclosure should you search for, and what does the answer tell you?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Wednesday morning.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Friday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "Brent fell 8% to $101 per barrel after Axios reported the White House believes the US and Iran are close to a war-ending deal. The Trump administration paused the Hormuz commercial-ship escort operation citing negotiation progress.",
+  2: "The 10-year Treasury yield fell 6 basis points to 4.35%. A basis point is one one-hundredth of a percentage point.",
+  3: "A$10 billion (~$7.2 billion USD) for a 1-billion-litre national fuel reserve — roughly a 50-day strategic stockpile. Allies do not build 50-day reserves when they believe in a clean structural energy reset.",
+  4: "Form 10-S (semi-annual). 60-day public-comment period that started May 5. Analysts expect finalization by year-end 2026.",
+  5: "AUM crossed $1.03 trillion (third US alt manager after Blackstone and KKR). Total inflows $115B (record). Origination $71B (annualized larger than the entire 2009 syndicated-loan market).",
+  6: "Oral Wegovy generated 1.3M prescriptions and DKK 2.26B (~$354M) — about 2x analyst expectations of DKK 1.16B. Wegovy brand now holds 65% of all new US GLP-1 scripts. FY guidance lifted from -5/-13% to -4/-12%.",
+  7: "Q1 revenue $13.2B, gross bookings $53.7B, GAAP operating income +57% YoY to $1.9B, non-GAAP EPS $0.72 (+44%). Optical headline miss came from a $1.5B mark-to-market hit on equity stakes (Aurora and similar). Q2 guide bookings $56.25–57.75B.",
+  8: "$1.9B deal at $27/share cash, expected Q3 2026 close. EKTERLY (sebetralstat) is the first oral on-demand plasma-kallikrein inhibitor for hereditary angioedema (HAE) — until now on-demand treatment required injection.",
+  9: "Capital Solutions fees set an all-time high at $246 million in Q1 2026.",
+  10: "1970. Triggered by the conglomerate-era accounting scandals at Litton and Loews Theatres-Tisch and the Penn Central railroad bankruptcy — investors couldn't see earnings deterioration fast enough during a credit-cycle turn. Commissioner Hamer Budge pushed quarterly disclosure as the response. The SEC required only annual reports through 1955, then semi-annual from 1955–1970.",
+  11: "(1) Model performance, (2) Adoption and engagement, (3) Operational impact, (4) Strategic outcomes, (5) Financial performance. Most companies prove Layer 1 accuracy but cannot trace a line from accuracy to Layer 5 EBITDA.",
+  12: "Horizon 1 = productivity gains (table stakes, commoditizes inside 18 months). Horizon 2 = workflow reinvention (durable margin — the redesigned workflow itself is hard to replicate). Horizon 3 = business-model rewriting (where alpha actually compounds). Companies winning in 2028 are reinvesting Horizon-1 savings into Horizon-2 redesign, not banking them.",
+  13: "AI debt is what 80% of enterprises are accumulating by bolting agents onto legacy stacks rather than redesigning. Compounds the way technical debt did in 2014–18, with the bill arriving as $30M+ re-platforming charges. Will be the diligence vocabulary of 2027.",
+  14: "Layer 2 — Adoption and engagement. The framework reframes the diligence question from 'is the model good?' to 'will anyone actually use it on a Tuesday?' That shifts AI underwriting away from management-team optimism toward measurable user-behavior evidence.",
+  15: "(1) Yields fall as inflation expectations ease (cheaper energy passes through to headline CPI with ~2-month lag). (2) Duration outperforms — long-dated bonds rise in price faster than short-dated ones. (3) Equity rotation favors consumer staples, airlines, and rate-sensitive sectors like utilities and homebuilders.",
+  16: "Both happened inside 96 hours. Powell's exit removes the institutional inflation-credibility voice from the FOMC; the SEC walks back a 1970 disclosure reform born from the same kind of credit-cycle turn we are entering now. Together they are a deregulatory unwind: the cost of regulatory capital is falling, but the cost of information asymmetry is rising. Both push capital toward private markets and away from public ones — and Apollo's $1T print is the corollary.",
+  17: "May 4 thesis was '$1T US Rx spend, GLP-1s on top, $63B tirzepatide / $59B semaglutide wholesale.' Today adds the channel-mix shift: oral GLP-1 captured 65% of new US scripts in 4 months. Pills travel through pharmacy-benefit channels with different rebate economics than injectables, so the commercial ASP step-down accelerates faster than the 2-year glide path modeled in April. Compounding pharmacies, MedSpa, and weight-management roll-ups need to re-underwrite net-revenue assumptions on a quarterly cadence.",
+  18: "(1) Three Horizons applied to AI (May 6). (2) Rewired three-plane stack: control, data, governance (May 1 / May 4). (3) Touchless Revenue Cycle (Apr 25 / May 4). (4) Five-Layer AI Measurement Stack (May 6). Each piece nests inside the next, forming the language ladder PE will be using in IC memos by Q3.",
+  19: "The market is taking the cease-fire (8% drop in Brent on the Axios deal-leak) but sovereigns are pricing the next disruption (Australia's $7.2B reserve build, US SPR refill, China teapot demand). The Iran risk premium of $15–20/barrel is draining out of spot, but the structural bid underneath determines whether $95 holds when the headlines fade. Watch the G7 trade-ministers meeting tomorrow.",
+  20: "AUM is largely backward-looking — committed capital from prior fundraises. Origination measures flow: how fast private credit is replacing syndicated leveraged-loan and high-yield issuance in real time. $71B/quarter is, on an annualized basis, larger than the entire 2009 syndicated-loan market. Private credit is no longer a complement to public credit — it IS the mid-market.",
+  21: "(1) Watch Brent at the close — does it hold above $98 (war premium intact) or break $95 (full reflation trade)? (2) Draft a one-page take on what the 10-Q→10-S change means for the public-private comp framework. (3) Pull Apollo's 10-Q this afternoon and search for the private-credit weighted-average spread. (4) Save the 3 McKinsey pieces + Apollo deck in a 'May 2026 frameworks' folder for the August AI-and-healthcare seminar. (5) Personal energy: 30-minute walk between sessions today to let the synthesis happen offline.",
+  22: "Search for the private-credit weighted-average-spread disclosure. If origination grew via spread compression → it's an inflow story (cheaper LBO debt coming for healthcare deals). If origination grew at constant spreads → it's a market-share story versus syndicated banks (different downstream implications)."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner Wednesday morning.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Friday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
