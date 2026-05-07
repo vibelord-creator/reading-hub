@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — May 7, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Thursday, May 7, 2026 — Episode Daily_Reading_2026-05-07.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="1.5;300" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> What is the headline valuation of Anthropic's enterprise AI services venture with Blackstone, Hellman &amp; Friedman, and Goldman, and how much is each anchor partner committing?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: total valuation in billions; per-partner commitment in millions.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="8;4;1992" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> What was the vote split on the Federal Reserve's April 29 decision, and when was the last comparable Fed dissent cluster?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="50;245;149" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> Under the CMS BALANCE Model, what is the senior Medicare GLP-1 monthly copay starting January 2027, the two-year-glide DTC injectable price, and the oral starting-dose cash-pay target?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="191;445" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> Per Bain's Healthcare PE Report 2026: what was 2025's record deal value, and how many buyouts?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="32;57" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> How much did healthcare IT deal value reach in 2025 (per Bain), and by what percent did provider services rise YoY?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="8;18;22" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What was the top-quartile global buyout return in 2025 (per Bain), and how did it compare to the S&amp;P 500 and MSCI World?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="1.3;40;15" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What is the size of global PE dry powder, what share has been sitting more than 2 years, and how does that compare to the 5-year average?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="3.5;3.75" data-threshold="1">
+    <div class="q-text"><span class="q-num">8.</span> What is the current federal funds rate target band?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="4.37" data-threshold="1">
+    <div class="q-text"><span class="q-num">9.</span> What is the 10-year Treasury yield this morning?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="3.5;oil" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> What was March headline PCE YoY, and what was the primary driver named in the Fed reporting?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="11" data-keys="ai;geo;employee" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> Name the three "tectonic forces" in McKinsey's State of Organizations 2026.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="agentic;talent;capabilit;operating" data-threshold="3">
+    <div class="q-text"><span class="q-num">12.</span> Name the four imperatives for CIOs in McKinsey's Global Tech Agenda 2026.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="80;sub-segment;granular" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> What is the central claim of McKinsey's Granularity of Growth (Baghai/Coley/White, 2008), and which framework does the episode argue applies to GLP-1 mass-market pricing?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="control;data;governance" data-threshold="3">
+    <div class="q-text"><span class="q-num">14.</span> Name the three planes of McKinsey's Rewired stack referenced in the agentic-AI thread.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="irr;moic;pme" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> Define the three private-equity return measures the episode unpacked: IRR, MOIC, and PME.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="16" data-keys="1992;greenspan;eight months;quarter" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> What is the historical parallel for today's 8–4 Fed dissent vote, and what does that history suggest about the timing of policy direction changes?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="powell;warsh;dovish;productivity" data-threshold="3">
+    <div class="q-text"><span class="q-num">17.</span> Connect today's Fed dissent vote to the May 4 Powell-departure thread and the April 20 Warsh thread. What does the combination signal about the dovish path?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="apollo;sec;iran;regime" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> Name the three "regime-change" events from yesterday's news cycle and the question to watch by Friday.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="adherence;oral;employer;cardio;compounding" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Per the Granularity of Growth deep dive, name at least three GLP-1 sub-segments the episode argues will outperform a "pick the GLP-1 winner" thesis.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="warrant;services;portco;adoption" data-threshold="3">
+    <div class="q-text"><span class="q-num">20.</span> What is the diagnostic question the episode argues to ask about the Anthropic and Blackstone services-arm structure, and what are the two possible return-flow mechanisms?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="21" data-keys="bain;diligence;brent;granular;warrant" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> List at least three of the five action items the episode flagged for this week.</div>
+    <textarea placeholder="Your answer" rows="5"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="touchless;agentic;capex;100;basis" data-threshold="3">
+    <div class="q-text"><span class="q-num">22.</span> What is the specific diligence question the episode argues to add to every healthcare-LBO model this quarter?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-temporal threads (Section C) need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const ANSWERS = {
+  1: "$1.5B total valuation, with $300M each from Anthropic, Blackstone, and Hellman & Friedman. Goldman Sachs is the third strategic founding partner.",
+  2: "8–4 split — first four-dissent FOMC vote since October 1992 (33+ years).",
+  3: "$50/month senior Medicare copay (effective January 2027). DTC injectable resets to ~$350/month with two-year glide path to $245. Oral starting-dose cash-pay target: $149/month.",
+  4: "$191B record deal value. 445 buyouts (second-highest count ever).",
+  5: "Healthcare IT: $32B (doubled YoY). Provider services: +57% to $62B.",
+  6: "Top-quartile buyout: ~8% pooled IRR. S&P 500: 18%. MSCI World: 22%. Public beat private at the top quartile, not just the median.",
+  7: "$1.3T global dry powder. 40%+ has been sitting >2 years. That's 15 percentage points above the 5-year average — a structural, not cyclical, problem.",
+  8: "3.50–3.75% federal funds target band.",
+  9: "10-year Treasury at 4.37%.",
+  10: "Headline PCE 3.5% YoY in March, driven primarily by oil.",
+  11: "(1) AI and tech acceleration. (2) Geo-economic disruption. (3) Evolving employee expectations. These drive nine specific organizational shifts.",
+  12: "(1) Invest in agentic automation with intent. (2) Hire top talent. (3) Build team capabilities. (4) Weave AI/data into the operating model.",
+  13: "Granularity of Growth claim: ~80% of variance in corporate growth comes from where you compete (sub-segment selection), not how. The framework predicts GLP-1 mass-market pricing rewards granular sub-segment plays — adherence, oral specialists, employer carve-outs — over picking a single category winner.",
+  14: "Control plane / Data plane / Governance plane. The episode argues governance is where 2026–28 AI value capture concentrates because most enterprises are bolting agents onto legacy stacks (AI debt).",
+  15: "IRR (Internal Rate of Return): annualized return net of fees and carry. MOIC (Multiple of Invested Capital): gross multiple before time-weighting. PME (Public Market Equivalent): cash-flow-matched comparison against a public-market benchmark. Bain's 2025 numbers are pooled IRRs — the PME comparison is even less flattering.",
+  16: "October 1992 was the last 4-dissent FOMC vote (Greenspan era; objection to holding above 3% in election-year recovery). Within 8 months the Fed cut twice. Lesson: high-dissent moments tend to precede policy direction changes by 1–3 quarters, not 6+. Worth pricing into June/July rate-vol positioning.",
+  17: "Warsh's AI-productivity case (Apr 20) provided intellectual cover for cuts. Powell exit (May 4) removed the institutional credibility constraint. Today's 8–4 dissent vote is the institutional vote count confirming the constraint has loosened. Net: the dovish wing now has the clearest policy room in three years.",
+  18: "(1) Apollo crossed $1T AUM with $71B quarterly origination. (2) SEC moved to scrap mandatory quarterly reporting (Form 10-S proposal). (3) Iran-truce optimism crashed Brent crude 8%. Friday question: which sticks? Each one alone would be the headline of a normal week.",
+  19: "Adherence platforms; oral-formulation specialists; employer carve-out administrators; compounding pharmacies that survive regulatory consolidation; cardio-renal benefit-management plays.",
+  20: "The diagnostic question is HOW returns flow. Two possibilities: (1) services revenue (lumpy, low-multiple — Palantir critique); (2) warrants on portfolio companies adopting the agents (the real structural prize, tied to portco adoption metrics). If warrants exist and vest on adoption, the deal is structurally novel; if not, the multiple ceiling is bounded.",
+  21: "(1) Read both Bain reports (Global PE + Healthcare PE) at diligence depth. (2) Add the touchless-RCM/agentic-AI capex+rate-sensitivity question to every healthcare-LBO checklist. (3) Watch Brent crude — sub-$90 hold for 3 sessions = recalibrate June FOMC mental model. (4) Re-read McKinsey Granularity of Growth before next case prep. (5) Track the warrants disclosure on the Anthropic-Blackstone deal.",
+  22: "What is the touchless-revenue-cycle and agentic-AI capex assumption embedded in this model, and how does that capex schedule change if the federal funds rate falls 100bps faster than the strip implies? It integrates macro path, operating-model spend, and reimbursement reset into one underwriting case."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-temporal threads (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Tuesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
