@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — May 14, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Thursday, May 14, 2026 — Episode Daily_Reading_2026-05-14.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="18.2;33;1-in-3" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> What was Kalshi's implied probability of a Fed rate hike in 2026 a month ago, and where does it stand today?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: two percentages, one from a month ago and one current.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="warsh;friday;may 15" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> Who becomes Fed Chair this week, and what is the specific date Powell's chair term ends?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="34.4;32.3" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> Per the Ramp AI Index for April, what enterprise adoption percentages did Anthropic and OpenAI post?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="4;github;doubled" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> What share of all public GitHub commits worldwide are now Claude-authored, and how did that change month-over-month?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="1.9;58;82" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> MGI Europe report: what dollar value-at-stake by 2030 (midpoint), what % of work hours are theoretically automatable today, and what % of that value comes from agents vs robots?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="245;50;2027" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> Per KFF, what is the BALANCE Model net price per 30-day supply for GLP-1s, the Medicare bridge senior copay amount, and how long is the copay locked in?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="437;13.25;31" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> Cross Country Healthcare take-private: deal value, per-share price, and premium to prior?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="1.05;750;300" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> Roche–PathAI: total deal size and the upfront/milestone split?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="3.8;july 2027" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> What is April 2026 headline CPI (year-over-year), and how far has Bank of America pushed its first expected rate cut?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="10" data-keys="people;hybrid;agent;robot" data-threshold="3">
+    <div class="q-text"><span class="q-num">10.</span> Name the seven Work Archetypes from McKinsey's MGI Europe report (in order from people-centric to robot-centric).</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="horizon;h3;h2;pharma;portfolio" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> Which McKinsey framework is used to place quantum computing, and in which Horizon does it sit for most industries vs the early-adopter industries?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="rcm;prior auth;call center;scribing;analytics" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> Per Catlin's "go deep beats go broad" argument, name 2–3 specific workflows in healthcare where the rewire generates measurable EBITDA delta.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="volcker;13;3.8;credibility" data-threshold="3">
+    <div class="q-text"><span class="q-num">13.</span> Volcker–Warsh parallel: what CPI level did Volcker inherit in 1979 vs what Warsh inherits today, and what makes the parallel "structurally identical" despite the difference?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="41;62;continuation;secondary" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> Per Bain, what is the year-over-year growth in secondary deal volume overall, and what is the GP-led continuation vehicle growth specifically? Why does this structure matter under a hike regime?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="15" data-keys="claude code;workflow;agentic;coding" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> How does Anthropic passing OpenAI in enterprise share (via Claude Code) connect to the May 7 thesis that distribution is the binding constraint for frontier labs? What does it confirm or refute?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="april 7;balance;trumprx;foundayo;oral;245;50" data-threshold="4">
+    <div class="q-text"><span class="q-num">16.</span> Trace the 8-data-point GLP-1 pricing reset arc from April 7 through today. Name at least four data points and explain why the original "two-year glidepath" now looks slow.</div>
+    <textarea placeholder="Your answer" rows="5"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="dissent;april 29;institutional;data" data-threshold="3">
+    <div class="q-text"><span class="q-num">17.</span> The episode argues the rate-regime flip wasn't driven by data first. What sequence did the institutional behavior follow, and what diagnostic does the host pull from that sequence?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="integrator;workflow;rewire;foundation;not" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> The MGI Europe data, the Ramp Anthropic-vs-OpenAI data, and Catlin's "go deep" piece are described as "one thesis from three angles." State the unified thesis in one sentence.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="hst;9;2;under-allocated;screen" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Catlin's argument connects to which McKinsey US Healthcare 2026 number, and what does that imply about how most existing healthcare PE funds are positioned?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="20" data-keys="dispersion;dot plot;eight-to-four;5%" data-threshold="3">
+    <div class="q-text"><span class="q-num">20.</span> What specific Fed metric does the episode flag as the diagnostic for whether the regime change is real, and what stress-test rate should sponsors be modeling against?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="21" data-keys="hst;rcm;analytics;scribing;under-built" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> What three sub-categories make up the HST screen the host wants you to build this week, and which one is flagged as the "under-built" category?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="workflow;rewire;corporate;pilot;named" data-threshold="3">
+    <div class="q-text"><span class="q-num">22.</span> What is the Catlin-derived diligence question to add to your portfolio-company AI checklist, and what answer indicates "pilot purgatory" rather than real value creation?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again tomorrow.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "18.2% a month ago vs. better-than-1-in-3 (~33%+) today. Roughly an 80% relative repricing in 30 days, driven primarily by the May CPI and PPI prints.",
+  2: "Kevin Warsh becomes Fed Chair. Powell's chair term expires Friday, May 15, 2026.",
+  3: "Anthropic at 34.4% of US businesses in April; OpenAI at 32.3%. First time Anthropic has led in enterprise share.",
+  4: "~4% of all GitHub public commits worldwide are now Claude-authored, a figure that doubled month-over-month. The engine is Claude Code, the fastest-growing product in Anthropic history.",
+  5: "$1.9T value-at-stake by 2030 in the midpoint scenario ($1.1T gradual). 58% of work hours are theoretically automatable today. Of that value, ~82% comes from agents and only ~18% from robots — even in manufacturing.",
+  6: "BALANCE Model net price: $245 per 30-day supply. Medicare GLP-1 Bridge senior copay: $50/month. The $50 copay is now locked in through year-end 2027.",
+  7: "All-cash take-private by Knox Lane for $437M, at $13.25/share, a 31% premium. Closing expected Q3 2026.",
+  8: "Up to $1.05B total — $750M upfront plus $300M in milestones. Roche Diagnostics absorbs PathAI as an operating unit; closes H2 2026 pending regulatory clearance.",
+  9: "April 2026 headline CPI: 3.8% YoY (highest annual print since May 2023). BofA pushed its first expected cut all the way out to July 2027.",
+  10: "People-centric, hybrid-physical, hybrid-cognitive, agent-augmented, robot-augmented, agent-centric, robot-centric. Paired with the Skill Change Index (SCI), which time-weights workforce exposure under different adoption scenarios.",
+  11: "Three Horizons. Quantum sits in Horizon 3 (transformative bets) for most industries, but already Horizon 2 (emerging adjacencies) for pharma molecular discovery and financial services portfolio optimization.",
+  12: "Revenue cycle management (RCM), prior authorization, and call-center triage. These are McKinsey's named touchless-RCM-style deep deployments, generating measurable cost-to-collect deltas (30–60% per the May 2 Touchless RCM piece).",
+  13: "Volcker inherited CPI at ~13% (specifically 7.7% rising to 14.8% by March 1980). Warsh inherits CPI at 3.8%. The parallel is structurally identical because both face the same political-vs-data tension — a President demanding cuts while inflation data demands the opposite — making Fed credibility the binding constraint, not policy mechanics.",
+  14: "Secondary deal market grew 41% YoY; GP-led continuation vehicles grew 62% YoY. Matters under a hike regime because secondaries/CVs avoid re-underwriting an asset at new-money rates — so dry powder rotates into them, and 'slower deal flow' becomes 'rotated deal flow' from primary to sponsor-to-sponsor.",
+  15: "Confirms it. The May 7 thesis was that frontier labs picked PE (not VC) because distribution and deployment are the binding constraint. Today's Ramp data shows Anthropic actually passed OpenAI through Claude Code — an agentic coding tool embedded in developer workflows — not through a better consumer chat experience. Market share is being decided one workflow at a time, exactly as the May 7 thesis predicted.",
+  16: "Eight points: (1) April 7 CMS BALANCE Model launches under Medicare Part D. (2) April 21 TrumpRx $50 copay glidepath. (3) April 25 Foundayo launches at $25/$149. (4) May 4 GLP-1 crosses $1T in US Rx spend. (5) May 6 Novo Wegovy earnings — oral at 2x expectations, 65% of new US scripts. (6) May 7 BALANCE Model operational. (7) May 12 STEP UP slow-responder data widens addressable population. (8) Today's KFF confirms $245 net price + $50 copay through 2027. Original 2-year glidepath looks slow because channel-mix to oral semaglutide compounds the reset, and BALANCE locks in the public price layer.",
+  17: "Sequence: April 29 Fed held rates on an 8-to-4 vote, the most fractured FOMC since 1992 — institutional dissent. Then the Economist May 2 CPI breakout. Then May 12 CPI ratified at 3.8%. Then Warsh confirmation May 13. The diagnostic: when institutional dissent runs ahead of the data, the regime change is real. Data only ratifies what the dissent already revealed.",
+  18: "Workflow-deep, agentic AI deployment is where the durable rents accrue — not foundation models, not general chat, not corporate-wide AI programs. The integrators and rewirers capture the value; the model labs commoditize.",
+  19: "The 9% HST EBITDA CAGR (vs ~2% for traditional providers) through 2029. Implication: most existing healthcare PE funds are under-allocated to HST by roughly 3–4x because their pipelines were built on the prior physician roll-up thesis. Catlin's go-deep argument is the operational playbook to capture that HST growth — pick 2–3 workflows (RCM, prior auth, scribing) and rewire end-to-end.",
+  20: "The dispersion of the dot plot (not the median) is the diagnostic. If dispersion widens further from the April 8-to-4 split, regime change is real. Sponsors should stress-test underwriting at a 5%+ terminal rate scenario.",
+  21: "(1) Next-generation revenue cycle management platforms. (2) Decision-support analytics startups — flagged as the under-built one. (3) AI clinical scribing companies. McKinsey's 9% HST EBITDA growth projection through 2029 makes this the highest-priority portfolio-construction screen.",
+  22: "Question: which 2–3 workflows is this portfolio company rewiring, and what is the measurable earnings delta at the workflow level? Pilot-purgatory answer: a corporate-wide AI program with no named workflows or owners. Real-value answer: named workflows (e.g., RCM, prior auth, call-center triage), named owners, and measurable cost-to-serve or cost-to-collect deltas."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again tomorrow.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
