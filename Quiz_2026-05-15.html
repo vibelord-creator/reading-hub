@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — May 15, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Friday, May 15, 2026 — Episode Daily_Reading_2026-05-15.mp3</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="45;1" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> What were the CME FedWatch odds of a 2026 rate hike one month ago versus today?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: looking for both percentages.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="4.55;9" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> Where did the 10-year Treasury yield close after this week's CPI print, and by how many basis points did it move?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="1.7;0.6" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> How many percentage points did the Iran oil shock add to Q1 2026 annualized headline CPI per the Dallas Fed, and how many percentage points to Q4-over-Q4 2026?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="34.4;32.3" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> Per the Ramp AI Index, what were Anthropic's and OpenAI's enterprise adoption shares this month?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="149;50" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> At what self-pay price did Lilly launch its oral GLP-1 Foundayo, and what is the Medicare senior copay under the BALANCE Model?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="245;2027" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What is the BALANCE Model net price per 30-day GLP-1 supply, and through what year is the Medicare GLP-1 Bridge program locked in?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="1.9;kalvista" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What is the headline price of Chiesi's acquisition of KalVista, and what is the lead asset?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="100;hormuz" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> What is Brent crude trading above today, and which chokepoint is the IEA citing as the largest supply disruption in the global oil market's history?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="four;4;blackstone;hellman;goldman" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> How much initial capital is OpenAI's DeployCo raising, and which three PE firms anchored Anthropic's parallel JV?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="10" data-keys="tariff;export;mineral;localization;geopolit" data-threshold="3">
+    <div class="q-text"><span class="q-num">10.</span> Name the five exposure buckets in McKinsey's Geopolitical Value at Stake (GVaS) framework.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="roll;combination;capabilit" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> Name the three integration strategies in McKinsey's new PE M&amp;A integration taxonomy (Maloney/Dinneen).</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="acquir;integrat;dilut" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> What is the named pitfall McKinsey identifies as the modal failure mode in healthcare PE roll-ups today?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="portfolio;molecul" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> Per McKinsey Quarterly, what are the two near-term commercial use cases for quantum computing, and in which industries do they sit?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="burns;volcker;credibil" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> What is the 1973 historical parallel that frames Warsh's choice this week, and what was the central insight that distinguished Burns from Volcker?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="15" data-keys="dissent;eight;four;1992;ratif" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> Describe the sequencing of the Fed regime-flip story from April 29 through today. What does the episode argue is the diagnostic for when an institutional regime change is real?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="balance;foundayo;oral;wegovy;step up" data-threshold="3">
+    <div class="q-text"><span class="q-num">16.</span> The GLP-1 commercial pricing reset architecture has compounded across nine connected data points in six weeks. Name at least four of those data points in chronological order.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="distribution;workflow;duopoly" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> Both Anthropic and OpenAI chose PE — not hyperscalers and not VCs — as their enterprise-services JV partner this month. What is the episode's read on what that signals about the binding constraint in frontier AI?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="200;300;asp;input;negative" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> Describe the compound effect on a 2024-vintage healthcare LBO with floating-rate debt and a 2027 refi wall. What three forces combine, and what is the directional impact on equity IRR?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="roll;rcm;scale;agentic;touchless" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Which of McKinsey's three integration strategies best fits a 2026 sponsor sitting on a sub-scale healthcare RCM platform, and why? What is the specific pitfall to avoid?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="20" data-keys="rerun;re-run;3.75;hike;refi" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> If you touched an LBO model this quarter that assumed two cuts in 2026, what is the specific Monday-morning action item?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="21" data-keys="transitory;supply;credibil;anchor" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> What language signals from Warsh's first FOMC statement should you watch, and which signal each direction?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="hormuz;asian;supply;gvas;exposure" data-threshold="3">
+    <div class="q-text"><span class="q-num">22.</span> For any portfolio company with Asian supply chains or oil-linked input costs, what is the specific diligence overlay to run this quarter, and which exposure node should be the top concern?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Monday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "About 1% a month ago, ~45% today (per CME FedWatch). That is roughly an 80% relative repricing in 30 days — one of the fastest rates-market regime flips of the modern era.",
+  2: "10-year Treasury yield ripped 9 basis points to 4.55%, the highest in a year.",
+  3: "+1.7 percentage points to annualized Q1 2026 headline CPI, and +0.6 percentage points to Q4-over-Q4 2026 CPI. Energy is ~7% of CPI weights but second-order pass-through (transport, packaging, chemicals) is meaningfully larger than the direct weight.",
+  4: "Anthropic 34.4% versus OpenAI 32.3% — first time Anthropic has led, driven primarily by Claude Code (agentic coding).",
+  5: "$149/month for Foundayo's lowest dose self-pay (matching Novo's oral Wegovy), and a $50/month senior copay under the BALANCE Model.",
+  6: "$245 per 30-day supply (covering Foundayo, Mounjaro, Ozempic, Rybelsus, Wegovy, and Zepbound KwikPen). The Medicare GLP-1 Bridge program is locked in through 2027.",
+  7: "Approximately $1.9B for KalVista Pharmaceuticals. Lead asset: EKTERLY, an oral kallikrein inhibitor for hereditary angioedema attacks.",
+  8: "Brent crude above $100/bbl. The Strait of Hormuz is the chokepoint — the IEA is calling the disruption the largest in the history of the global oil market.",
+  9: "OpenAI's DeployCo: $4B+ initial capital. Anthropic's JV partners: Blackstone, Hellman & Friedman, and Goldman Sachs.",
+  10: "(1) Tariffs. (2) Export controls. (3) Critical minerals / inputs supply. (4) Data localization. (5) Geopolitical scenarios. A VaR-style framework McKinsey published in April 2026 — would have flagged Hormuz transit as a top exposure node in early 2025.",
+  11: "(1) Roll-ups. (2) Comparable-size combinations. (3) Complementary-capabilities combinations. Each carries four foundational practices (clear value prop, integrated processes, M&A muscle, talent realism).",
+  12: "'Acquiring without integrating' — leads to dilution and is the modal failure mode in healthcare roll-ups right now. The fix: migrate acquisitions onto the unified platform within months, not years.",
+  13: "(1) Portfolio optimization (finance / systematic trading). (2) Molecular simulation (pharma / drug discovery). Quantum sits in Horizon 3 for most industries but Horizon 2 for these two sectors specifically.",
+  14: "1973–74 OPEC stagflation. Arthur Burns misread the oil shock as transitory and cut rates into it; CPI ran double digits through 1980 until Volcker hiked Fed Funds to 20% to break the cycle. The distinguishing insight: Volcker re-anchored Fed credibility — the cost was two recessions and four years of 9%+ unemployment, the benefit was 20 years of disinflation.",
+  15: "April 29: Fed held rates on an 8-to-4 vote, the most fractured FOMC vote since 1992 (institutional dissent ran ahead of data). May 12: April CPI hit 3.8%, the highest since May 2023 — the data ratified the dissent. May 13: Warsh confirmed. Today (May 15): Powell's term ends, Warsh inherits the chair, CME FedWatch at 45% hike odds. The diagnostic: whenever institutional dissent runs ahead of data, the regime change is real.",
+  16: "Apr 7 CMS BALANCE Model under Part D launches. Apr 21 TrumpRx $50 copay glidepath. Apr 25 Foundayo $25/$149 launch. May 4 GLP-1 crossing $1T US Rx spend. May 6 oral Wegovy 65% of new scripts. May 7 BALANCE Model operational. May 12 Wegovy STEP UP slow-responder data. May 14 KFF confirms $245 net price + $50 copay through 2027. May 15 Lilly Foundayo + oral Wegovy at $149 with 50% Novo price cut. Nine connected data points; original 2-year glidepath runs out in roughly half the time.",
+  17: "Distribution, not capital and not model quality, is the binding constraint. PE owns ~10,000+ ops-intensive portcos and has the operating muscle for change management. Hyperscalers compete (their own model layers); VCs lack the deployment capex muscle. The OpenAI–Anthropic enterprise duopoly is now consolidating with PE as the channel.",
+  18: "Three compounding forces: (1) refi at +200–300 bps over original underwriting from the Warsh-hike scenario; (2) GLP-1 ASP reset hitting weight-management-adjacent revenue 25–35% lower than 2025 base; (3) oil-driven input-cost squeeze on devices, packaging, logistics. Directional impact: equity IRR compresses materially — possibly negative if entry leverage was aggressive. The only lever sponsors can pull is integration-execution alpha.",
+  19: "Roll-up is the right fit. RCM is fragmented, has clear scale economics (shared tech, payer-contract leverage), and agentic AI creates new operating-model differentiation through the 'touchless revenue cycle' thesis. The pitfall to avoid: acquiring without integrating — buying competitors but failing to migrate them onto the unified AI-enabled platform within months.",
+  20: "Rerun the model under the Warsh-hike scenario — refi at terminal Fed Funds of 3.75–4.00%. If equity IRR turns meaningfully negative, that is the stress-test result, not the base case, but you need to know where the cliff sits.",
+  21: "Watch for 'transitory' or 'supply-side' language — that signals the Burns risk (philosophically aligned with accommodation, willing to look through the shock). Watch for 'credibility' or 'anchored expectations' — that signals the Volcker path (willing to take short-term pain to re-anchor inflation expectations). Markets will price the first sentence.",
+  22: "Run the McKinsey GVaS (Geopolitical Value at Stake) framework. Bucket exposure across tariffs, export controls, critical minerals, data localization, and geopolitical scenarios. Top concern: Strait of Hormuz transit — the IEA calls it the largest supply disruption in oil-market history. If Hormuz exposure is in the top three nodes, that is the highest enterprise-value-at-risk position right now."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Monday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
