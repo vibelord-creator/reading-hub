@@ -1,2 +1,0 @@
-# reading-hub
-Reading hub

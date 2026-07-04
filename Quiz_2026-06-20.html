@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — June 20, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Saturday, June 20, 2026 — Episode Daily_Reading_2026-06-20.mp3 (weekend re-read of the June 19 digest)</div>
+    <div class="meta">
+      <span>25 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 11–13 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="3.5;3.75;9" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> At what range did the FOMC hold the federal funds rate on June 17, and how many officials now project at least one hike this year?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: a rate range and a count of officials.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="191;445" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> Per Bain, what was 2025's record healthcare PE disclosed deal value, and roughly how many buyouts?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="62;57" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> Provider and related-services deal value rose to about what figure, and by what year-over-year percentage?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="32;doubl" data-threshold="1">
+    <div class="q-text"><span class="q-num">4.</span> What happened to healthcare IT deal value in 2025, and to what figure?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="675" data-threshold="1">
+    <div class="q-text"><span class="q-num">5.</span> What list price will Novo Nordisk set for its three GLP-1 drugs starting 2027?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="50;july" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What flat copay does the Medicare "GLP-1 Bridge" set for Part D beneficiaries, and when does it start?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="45;39.5" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What are the projected 2026 sales for Lilly's tirzepatide and Novo's semaglutide?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="88;1" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> In McKinsey's AI-native research, what share of organizations use AI in at least one function versus consider themselves fully mature?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="50" data-threshold="1">
+    <div class="q-text"><span class="q-num">9.</span> What share of advertisers say AI has already reshaped discovery and consideration?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="2 million;2m;2000000" data-threshold="1">
+    <div class="q-text"><span class="q-num">10.</span> What size context window does Google's Gemini 3.1 Ultra ship with?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="hint">Hint: token count.</div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="core infrastructure;2000;research" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> JPMorgan reclassified its AI spend from what line to what line, and how many staff are now on AI?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="12" data-keys="horizon;discovery;operating model" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> Which McKinsey framework structures "AI in life sciences," and what is Horizon 1 versus Horizons 2/3?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="cell;sub-segment;disaggregat;average" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> State the core idea of the Granularity of Growth framework and name its unit of analysis.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="operating model;architect;tool" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> Per McKinsey's "Rewired" thesis (extended by the seven operating truths), where does AI value actually accrue?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="impression;verified;sales lift;agent" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> In the agentic advertising economy, what pricing shift is underway, and why does "attention" lose value? Name the framework.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="credibility;remov;signal;recession" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> Explain the Volcker 1979 → Warsh 2026 parallel: what does a new chair's credibility rest on, and what is the honest counterweight to the analogy?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="17" data-keys="cut;productivity;hawkish;invert" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> How has the Kevin Warsh thread inverted from the April 20 Key Theme to today?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="foundayo;mfn;245;675;bridge" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> Trace the GLP-1 pricing arc across its appearances since April 25 (name the waypoints), and state where the investable edge has migrated.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="governance;rewired;operating truths;advertising;layer" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Describe the "agentic AI control layer" thread's arc and the single question it consolidates on.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="cost of capital;granular;maturity;operating model;compress" data-threshold="3">
+    <div class="q-text"><span class="q-num">20.</span> State the episode's grand synthesis: how do the macro story, Granularity of Growth, and the AI-maturity gap combine into one story?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="21" data-keys="list;net;rebate;permanent;volume" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> Explain the ASP-reset mechanism: why does Novo cutting its list price (vs. issuing coupons) signal a permanent change, and what does that do to the investment case?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="22" data-keys="rerun;re-run;hike;flat" data-threshold="1">
+    <div class="q-text"><span class="q-num">22.</span> If you touched an LBO model this month that assumed H2 2026 rate cuts, what is the specific weekend action item?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="23" data-keys="energy;oil;inflation" data-threshold="2">
+    <div class="q-text"><span class="q-num">23.</span> What is the single swing variable to watch on the Warsh story, and why does it decide soft-landing vs. hard-landing?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="24" data-keys="bridge;shortage;supply;volume" data-threshold="2">
+    <div class="q-text"><span class="q-num">24.</span> Why should you mark July 1 as a live event, and what headline in early July would signal the commoditization arc has hit a wall?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="25" data-keys="discipline;pressure;deploy;dry powder" data-threshold="2">
+    <div class="q-text"><span class="q-num">25.</span> When the large sponsors (Apollo, KKR, Blackstone) next report, what specific word choice should you listen for, and what does it tell you?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 25 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>20–25 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>14–19 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>8–13 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open. Quiz again tomorrow.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "Held at 3.5%–3.75% (4th straight hold). 9 officials now project at least one hike in 2026; Warsh deleted the easing bias in his first statement as Chair.",
+  2: "$191B+ disclosed deal value (new high, past 2021). ~445 buyouts (2nd-highest ever).",
+  3: "Provider / related-services deals rose ~57% YoY to about $62B.",
+  4: "Healthcare IT deal value doubled, to roughly $32B — the 'tell' that next-cycle alpha is in tech-enabled services, not provider roll-ups.",
+  5: "$675 — roughly 50% off Wegovy and ~35% off Ozempic, after Lilly overtook Novo in GLP-1 sales in 2025.",
+  6: "A flat $50 copay for anti-obesity GLP-1s, starting July 1, 2026 (Section 402 Medicare demonstration).",
+  7: "Lilly's tirzepatide: projected >$45B in 2026. Novo's semaglutide: ~$39.5B.",
+  8: "88% of organizations use AI in ≥1 function; only ~1% consider themselves fully mature, and ~two-thirds haven't scaled beyond pilots. The gap is operating model, not tooling.",
+  9: "Over 50% of advertisers say AI has already reshaped discovery and consideration.",
+  10: "A 2-million-token context window, working natively across text, image, audio, and video — enough to hold a full data room in one pass.",
+  11: "From 'experimental R&D' to 'core infrastructure,' with ~2,000 staff now on AI (productivity, cybersecurity, retail personalization). The reclassification signals durable, non-optional spend.",
+  12: "Three Horizons. H1 = discovery AI, live and creating value now. H2/H3 = the fully AI-reinvented R&D operating model, still ahead. Risk: funding H1 while AI-native biotechs build H3.",
+  13: "Returns/growth don't live at the sector level — they cluster in specific sub-segments ('cells'). The sector average is near-meaningless because it averages explosive cells with dead weight. The cell is the unit of analysis; disaggregate before you underwrite.",
+  14: "Value accrues from re-architecting the operating model, not from bolting a model/tool onto an existing process. Everyone has a tool; almost no one has an operating model — that spread is the investable opportunity.",
+  15: "Pricing is shifting from impressions to verified sales lift. When an AI agent (not a human) makes the purchase, attention is worthless — the agent doesn't get distracted by a banner; what matters is being seen, selected, and bought. Framework: value-pool migration / value-chain disaggregation toward the agent layer.",
+  16: "A new chair sets credibility by what he removes (Warsh deleting the cut bias), not by what the next CPI prints — and the more credible the signal, the less the Fed must actually do, because financial conditions tighten on their own. Counterweight: Volcker had to take fed funds to 20% and tolerate two recessions to win that credibility. Signaling works until it's tested; if energy keeps climbing and the market calls the bluff, the second verse could be a hard landing.",
+  17: "In April 2026, Warsh supplied the intellectual case FOR cuts (an AI-productivity argument: AI raises productivity, so you can cut without stoking inflation). As Chair in June, he did the opposite — deleting the cut bias and tilting hawkish. The same figure now anchors the opposite stance; credibility-setting beat data-following.",
+  18: "Foundayo launch ($25 / $149) → May 23 Most Favored Nation regime at $245 → today's Novo $675 list cut + Medicare GLP-1 Bridge at $50. 4th+ appearance since April 25; every point confirms payer-driven commoditization. The investable edge has migrated from price to volume and adjacency. Watch-out: a July 1 demand shock could create a supply constraint that reverses the arc.",
+  19: "Governance maturity 2.3/5 → Rewired three-plane stack → AI-native operating truths → agentic advertising. 5th+ appearance since March 30. It consolidates on one question: who owns the layer where AI decisions become actions? — the same fight across enterprise, commerce, and advertising.",
+  20: "One story. The macro (Warsh) raises the cost of capital and compresses multiples across the board. Granularity says compression isn't uniform — cells with real operating leverage can absorb a higher discount rate because their cash-flow growth is faster, so a hawkish Fed widens the gap between good cells and the average cell. The AI-maturity gap tells you which cells those are: the ~1% with a real operating model, not just a tool. Macro, framework, and technology point at the same answer.",
+  21: "The list price is the sticker; the net/average selling price is what's collected after rebates and discounts. Cutting the list price itself (vs. coupons) signals the lower net price is permanent, because list prices are sticky and hard to raise back. Add Medicare expanding who can fill the script and you get more units at a structurally lower price each. Revenue can still grow, but the case shifts from 'premium drug' to 'high-volume commodity' — re-underwrite adjacencies around units, not dollars per script.",
+  22: "Re-run it with a hike scenario (or at minimum flat rates), not the prior cut assumption. The dot plot moved; the assumptions should too. Good prep for the M&A class.",
+  23: "Energy prices. The entire hawkish pivot rests on energy-led inflation. If oil rolls over, the October-hike pricing unwinds fast and the frame softens; energy decides whether the Volcker rhyme ends in a soft or hard landing.",
+  24: "July 1 = the Medicare GLP-1 Bridge launch, the demand shock that tests the volume-over-price thesis. Shortage headlines in the first two weeks of July would signal the commoditization arc has hit a supply wall — add a constraint scenario to every GLP-1-adjacency model.",
+  25: "Listen for 'discipline' vs. 'pressure to deploy.' With Warsh raising the cost of capital and Bain showing record dry powder, that word choice is the real-time read on the forced-seller thesis and which way the cycle is leaning."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 20) {
+    bucketText = "Bucket: 20–25 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 14) {
+    bucketText = "Bucket: 14–19 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 8) {
+    bucketText = "Bucket: 8–13 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 8 — Re-listen at 0.9x with the script open. Quiz again tomorrow.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
