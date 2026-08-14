@@ -4,10 +4,10 @@
     <title>Anurag Daily Reading</title>
     <link>https://vibelord-creator.github.io/reading-hub/</link>
     <language>en-us</language>
-    <description>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</description>
-    <lastBuildDate>Sat, 08 Aug 2026 08:57:57 -0400</lastBuildDate>
+    <description>Daily audio digest.</description>
+    <lastBuildDate>Fri, 14 Aug 2026 09:26:03 -0400</lastBuildDate>
     <itunes:author>Anurag Maken</itunes:author>
-    <itunes:summary>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</itunes:summary>
+    <itunes:summary>Daily audio digest.</itunes:summary>
     <itunes:type>episodic</itunes:type>
     <itunes:owner>
       <itunes:name>Anurag Maken</itunes:name>
@@ -26,6 +26,19 @@
     <itunes:category text="Business">
       <itunes:category text="Entrepreneurship"/>
     </itunes:category>
+    <item>
+      <title>Daily Reading - 2026-08-14</title>
+      <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-08-14.html</link>
+      <description>Daily digest for 2026-08-14. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-08-14.html</description>
+      <pubDate>Fri, 14 Aug 2026 05:30:00 -0400</pubDate>
+      <guid isPermaLink="false">2026-08-14-Daily_Reading_2026-08-14.mp3</guid>
+      <enclosure url="https://vibelord-creator.github.io/reading-hub/Daily_Reading_2026-08-14.mp3" length="7065885" type="audio/mpeg"/>
+      <itunes:duration>19:37</itunes:duration>
+      <itunes:author>Anurag Maken</itunes:author>
+      <itunes:summary>Daily digest for 2026-08-14. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-08-14.html</itunes:summary>
+      <itunes:image href="https://vibelord-creator.github.io/reading-hub/cover.jpg"/>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
     <item>
       <title>Daily Reading - 2026-08-08</title>
       <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-08-08.html</link>
