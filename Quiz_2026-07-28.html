@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — July 28, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Tuesday, July 28, 2026 — Episode Daily_Reading_2026-07-28.mp3 (Weekend Deep-Read, Revisited)</div>
+    <div class="meta">
+      <span>22 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="471;31" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> How many PE-backed companies did McKinsey study in its AI value-creation analysis, and across how many industries?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="130" data-threshold="1">
+    <div class="q-text"><span class="q-num">2.</span> Roughly how much higher is the median revenue multiple for companies that embed AI into products and new businesses versus productivity-only users?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="13;31;33" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> What are the actual revenue multiples at the bottom versus top of the ladder? (Three numbers: productivity-only, level-four overall, level-four software.)</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="890" data-threshold="1">
+    <div class="q-text"><span class="q-num">4.</span> How large was the megacap tech-stock wipeout that landed the same week as the WSJ's AI spending-discipline story?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="alphabet;free cash flow" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> Which company printed its first-ever negative quarterly free cash flow as a public company last week, kicking off the wipeout?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="3.50;3.75;four" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What is the current Fed funds target range, and how many consecutive meetings has the Fed held there coming into this week's meeting?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="26;75;120" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> From the March private-credit analysis referenced today: what share of direct-lending portfolios is software exposure, and what is the range of potential AI-driven defaults?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="1990;40;david" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> Which economic historian documented the productivity paradox of electrification, in what year, and roughly how long did factories take to reorganize before gains showed up?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="ten;10;high" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> Where is the ten-year Treasury yield trading relative to its 2026 range as the Fed meeting starts?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="retail;private credit;pull" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> Inside Blackstone's strong quarter, which investor segment is retreating, and from which business line?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="11" data-keys="pilot;operating;product;business" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> Name the four levels of McKinsey's AI value creation ladder.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="data moat;integrated;operating model" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> What are the two prerequisites (the "gates") a company must have before pushing to level three of the ladder — and what happens if it climbs without them?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="short rate;term premium;inflation" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> The ten-year yield decomposes into which two components, and which one rises when inflation expectations de-anchor?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="commercial impact;rewire;agentic" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> What does McKinsey's B2B sales research call the end-to-end redesign that separates winners from pilot-runners, and what is the one-line takeaway?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="adoption;reorganiz" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> Per the episode, "overhyped versus underhyped" is the wrong axis for the AI debate. What is the right axis?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="cut;long;tighten;un-anchor" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> Explain the Fed's bind: why could a rate cut actually tighten financial conditions right now?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections (cross-article and cross-temporal)</h2>
+
+  <div class="q" data-id="17" data-keys="compute;sustain;private credit;wipeout;discipline" data-threshold="3">
+    <div class="q-text"><span class="q-num">17.</span> Trace the four beats of the "AI: from spend to return" thread from March to now.</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="analysis;ibm;flows" data-threshold="2">
+    <div class="q-text"><span class="q-num">18.</span> Lay out the three-stage genealogy of the private-credit software thesis: what happened in March, what earnings evidence arrived last week, and what is happening now?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="electri;steam;factory;level" data-threshold="2">
+    <div class="q-text"><span class="q-num">19.</span> How does the electrification story map onto McKinsey's ladder? Which levels correspond to "motors bolted onto the steam layout," and which to the redesigned factory?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="molecule;service;workflow;downstream" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> What is the healthcare value-migration thread, and how do Friday's items (FDA peptide vote, Novo–Lilly litigation, Sanofi pipeline cut) plus Patrick Finn's question extend it? What is the new screening question for a healthcare PE thesis?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items (what to watch)</h2>
+
+  <div class="q" data-id="21" data-keys="supply shock;look through;expectation" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> What is the single Powell "tell" to listen for at tomorrow's press conference, and what does each phrasing do to the long end?</div>
+    <textarea placeholder="Your answer" rows="4"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="ladder;rung;workflow;moat" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> Per the episode's closing action item, what are the two diligence questions that replace "does the target use AI?" in a healthcare deal discussion this quarter?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 22 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>17–22 correct:</strong> You internalized the material. You could brief a partner before the Fed decision tomorrow.</li>
+      <li><strong>12–16 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>7–11 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 7:</strong> Re-listen at 0.9x with the script open. Quiz again Wednesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "471 PE-backed companies across 31 industries.",
+  2: "Roughly 130% higher median revenue multiple for companies embedding AI into products and new businesses versus productivity-only users.",
+  3: "Productivity-only (levels 1–2): ~13–14x revenue — statistically near-indistinguishable from non-users. Level 4 (AI business-building): 31x overall, 33x for software.",
+  4: "Roughly $890B of megacap market value erased in the wipeout week.",
+  5: "Alphabet — its first negative quarterly free cash flow since going public. The stock fell ~7% and Tesla dropped ~15% the same stretch.",
+  6: "3.50–3.75%, held for four straight meetings. The July 28–29 meeting (starting today, decision tomorrow) is the next test.",
+  7: "Software is ~26% of direct-lending portfolios; the March analysis flagged $75B–$120B of potential AI-driven defaults if agentic AI compresses seat-based software revenue.",
+  8: "Paul David, 1990. Factories needed roughly 40 years after electrification began to reorganize (single-story layouts, motor-per-machine) before productivity gains showed up in the data.",
+  9: "Near its 2026 high — the bond selloff has pushed the ten-year toward the year's high, tightening financial conditions right into the Fed decision.",
+  10: "Retail investors are pulling back from private credit vehicles, even as institutional inflows into Blackstone's PE franchise stay strong.",
+  11: "(1) Opportunistic pilots. (2) Operating-model enhancement. (3) Product transformation. (4) AI business-building. The market barely rewards levels 1–2; the premium lives at 3–4.",
+  12: "(1) A proprietary data moat. (2) An integrated product/data/engineering operating model. Absent those, pushing to level 3 destroys value rather than creating it.",
+  13: "Expected future short rates plus a term premium. When inflation expectations de-anchor, the term premium rises — so long yields can climb even while the Fed stands still.",
+  14: "Commercial impact journeys — rewiring the whole go-to-market end to end with agentic AI. One-liner: pilots are not P&L; bolting an agent onto the old funnel produces activity, not revenue.",
+  15: "Adoption versus reorganization. The wipeout is the market repricing adopters; the McKinsey premium is the market pre-paying reorganizers. Both can be true at once — that is what a general-purpose technology transition looks like.",
+  16: "With expectations un-anchored, a cut could be read as tolerance for higher inflation, pushing the term premium and long yields UP — tightening conditions for mortgages, corporates, and LBOs even as the short rate falls. Holding or hiking defends the target but risks the growth scare the AI capex slowdown is hinting at.",
+  17: "March: compute scarcity / frontier cost sustainability. Early summer: private credit's software exposure. Friday: Alphabet's negative FCF and the ~$890B wipeout. Now: WSJ documents corporate spend discipline and McKinsey quantifies that only reorganization earns a premium. One narrative: the market stopped paying for AI inputs and started demanding AI outputs.",
+  18: "Stage 1 (March): analysis flags ~26% software exposure and $75–120B default risk. Stage 2 (last week): IBM's earnings show AI spend acting as a revenue headwind for seat-based software. Stage 3 (now): retail investors pulling money from private credit vehicles. Analysis became evidence became flows in about four months.",
+  19: "Levels 1–2 (pilots, operating-model enhancement) = electric motors bolted onto steam-era factory layouts — cheap adoption, no premium. Levels 3–4 (product transformation, AI business-building) = the redesigned factory — rare, expensive reorganization, which is why it commands 31x.",
+  20: "As molecules commoditize (GLP-1 price war, peptide vote, Novo–Lilly fight, Sanofi cuts), durable value migrates downstream to services, specialty pharmacy, distribution, and delivery platforms. Finn's 'who leads healthcare next' is the investor version. New screen: not who owns the drug, but who owns the workflow.",
+  21: "Does Powell call the oil move a supply shock the Fed can 'look through' (calms the long end), or does he voice concern about inflation expectations un-anchoring (lights it up)? One word choice, measurable in basis points.",
+  22: "(1) Which rung of the AI value-creation ladder is the target on — and does it have the data moat and integrated operating model to climb? (2) Does it own the workflow or just the molecule?"
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 17) {
+    bucketText = "Bucket: 17–22 — You internalized the material. You could brief a partner before the Fed decision.";
+  } else if (correct >= 12) {
+    bucketText = "Bucket: 12–16 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 7) {
+    bucketText = "Bucket: 7–11 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 7 — Re-listen at 0.9x with the script open. Quiz again Wednesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
