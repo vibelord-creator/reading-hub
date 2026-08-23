@@ -1,12 +1,19 @@
 name: Daily Reading podcast
 
 # Runs entirely on GitHub's infrastructure -- no local machine required.
-# 09:10 UTC is ~05:10 ET during EDT and ~04:10 ET during EST. GitHub's cron is
-# best-effort and routinely fires 5-30 minutes late on shared runners, so this
-# is deliberately scheduled early rather than at the exact target time.
+#
+# Daily chain:
+#   05:12 ET  local daily-reading-list writes the rich "Today's Reads" page (laptop only)
+#   05:15 ET  cloud sweep writes the newsletter digest page (laptop-independent)
+#   05:45 ET  claude.ai task writes "Podcast Script - <date>" into Notion
+#   06:45 ET  this workflow reads that page, or falls back to the Anthropic API
+#
+# 10:45 UTC is ~06:45 ET during EDT and ~05:45 ET during EST. GitHub's cron is
+# best-effort and routinely fires 5-30 minutes late on shared runners, so the
+# hour of headroom after the claude.ai task is deliberate.
 on:
   schedule:
-    - cron: "10 9 * * *"
+    - cron: "45 10 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -68,19 +75,49 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Fetch Notion digest
+      # Preferred path: a claude.ai scheduled task has already written the
+      # episode into Notion (see cloud-podcast-task-prompt.md). Better scripts
+      # than a single API call, and no per-episode API cost.
+      - name: Collect episode from Notion (claude.ai handoff)
+        id: handoff
         if: steps.plan.outputs.skip == 'false'
+        continue-on-error: true
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: |
+          D="${{ steps.plan.outputs.date }}"
+          mkdir -p scripts
+          python pipeline/fetch_script.py "$D" "scripts/Script_${D}.txt" /tmp/quiz.json
+
+      - name: Note which path is being used
+        if: steps.plan.outputs.skip == 'false'
+        run: |
+          if [ "${{ steps.handoff.outcome }}" = "success" ]; then
+            echo "::notice::Using the claude.ai script from Notion."
+          else
+            echo "::warning::No usable Notion script page; falling back to the Anthropic API."
+          fi
+
+      # Fallback path: generate the episode here. Only runs when the handoff
+      # page is missing or unusable, so a late cloud task degrades quality
+      # instead of breaking the feed.
+      - name: Fetch Notion digest (fallback)
+        if: steps.plan.outputs.skip == 'false' && steps.handoff.outcome != 'success'
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: python pipeline/fetch_digest.py "${{ steps.plan.outputs.date }}" /tmp/digest.json
 
-      - name: Write script and quiz
-        if: steps.plan.outputs.skip == 'false'
+      - name: Write script and quiz (fallback)
+        if: steps.plan.outputs.skip == 'false' && steps.handoff.outcome != 'success'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           EPISODE_MODEL: ${{ vars.EPISODE_MODEL || 'claude-opus-5' }}
         run: |
           D="${{ steps.plan.outputs.date }}"
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::No Notion script page and no ANTHROPIC_API_KEY set -- nothing to build."
+            exit 1
+          fi
           python pipeline/write_episode.py /tmp/digest.json "$D" \
             "scripts/Script_${D}.txt" /tmp/quiz.json
 
