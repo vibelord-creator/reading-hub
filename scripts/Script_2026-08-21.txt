@@ -1,0 +1,169 @@
+ANDREW: Daily Reading. Friday, August twenty-first, twenty twenty-six. Good morning, Anurag. Ava's back, and I'm told she has notes.
+
+AVA: I have one note, and it's about the lead. Andrew, you wanted to open with healthcare today.
+
+ANDREW: I did.
+
+AVA: I'd argue against it. Two separate desks ran data-center stories this morning — the Economist saying the backlash is fake, the Journal saying the backers are getting burned. And that lands two days after Knowledge at Wharton told us the grid is the binding constraint, and one day after we spent ten minutes on the term premium. That's not three stories. That's one story arriving in installments.
+
+ANDREW: Make the case.
+
+AVA: The case is that a data center is a bond with a cooling system. You raise long-dated debt against a long-dated contract, and the whole thing works only if two prices behave for fifteen years — the price of money and the price of power. Yesterday we watched the price of money misbehave. Wednesday we watched the price of power get tight. Today we get the first stories about people losing money on it. That sequence is the lead.
+
+ANDREW: Sold. We'll do the mechanism workshop right at the top, because it's the piece that makes the rest of the week legible. Then healthcare, then AI, then the threads.
+
+---
+
+ANDREW: So. Mechanism workshop. How does a data center actually get financed, and where exactly does it break?
+
+AVA: Start with what's being sold. A hyperscale data center is not really a building. It's a contract to deliver a certain number of megawatts of compute capacity to a tenant, for a term — call it ten to fifteen years. The building is the wrapper. The contract is the asset.
+
+ANDREW: And the tenant is usually one of a very short list of names.
+
+AVA: Which is the first thing to notice. This is single-tenant credit. If your data center is leased to one hyperscaler, you don't own a diversified real-estate asset. You own that company's credit, dressed up as property. Underwriters price it that way — the debt cost tracks the tenant's rating, not the neighborhood.
+
+ANDREW: Now the power side.
+
+AVA: The power side is where it gets interesting, and it's where the Journal piece is pointed. To build, you need firm power. You sign a long-term power purchase agreement — a PPA — that locks in supply at a set price, often with take-or-pay terms, meaning you pay whether or not you draw the electricity. That's the developer eating volume risk to give the utility revenue certainty, which is what makes the utility willing to build the interconnection in the first place.
+
+ANDREW: So the developer is now short power at a fixed price and long a lease at a fixed price.
+
+AVA: Correct, and that's a spread business. You're earning the difference between what the tenant pays you and what the power and the debt cost you. Spread businesses are fine — banks are spread businesses. The problem is leverage. These projects run at high loan-to-value because the contracted cash flows look bond-like. Seventy, seventy-five percent debt is not unusual. At that leverage, a modest move in either leg of the spread wipes out a large share of the equity.
+
+ANDREW: Give me the arithmetic.
+
+AVA: Simplified, but honest. Say the project earns a nine percent unlevered yield on cost, and you fund it seventy percent debt at six percent. Your equity return is roughly the nine, plus the seventy over thirty ratio times the three-point spread — call it sixteen percent. Now let debt cost rise to eight percent, because the long end sold off. Same asset, same tenant, same building. Equity return falls to about eleven and a half. You didn't lose a customer. You lost four and a half points of return to the bond market.
+
+ANDREW: And that's the connection to yesterday.
+
+AVA: That's the connection to yesterday. When the term premium rises — the extra yield investors demand for lending long — every long-duration asset reprices, and data centers are among the longest-duration assets anyone is building right now. The central bank can cut short rates all it likes. If the thirty-year is stubborn, the data-center pro forma is stubborn too.
+
+ANDREW: Then what's the third failure mode? You said two prices, but the Journal's piece is about backers, not prices.
+
+AVA: Residual value. At the end of a fifteen-year lease, what's the building worth? For an office tower you'd say a lot — you re-lease it. For a data center, the answer depends on whether the power density standard of twenty forty-one resembles the standard of twenty twenty-six. If chips get four times denser and cooling moves to something the building can't support, you own a warehouse with an excellent electrical service. That's the risk nobody underwrites honestly, because the residual assumption is the single easiest lever to flatter a model with.
+
+ANDREW: And the Economist's claim that the backlash is fake?
+
+AVA: I'd say the framing is right and the conclusion is complacent. Local opposition rarely stops a project outright — it delays it, and it extracts concessions. But delay is not free when your PPA has already started and your interest is capitalizing. The opposition doesn't need to win. It needs to cost you eighteen months. And on the other side, a16z's chart this week is a real point in the developers' favor — these sites are a genuine blue-collar employment story, construction and electrical trades, which is why the politics are messier than the Twitter version suggests.
+
+ANDREW: So where does that leave the investor?
+
+AVA: With a preference for the boring end of the stack. If you believe compute demand and doubt the financing terms, you'd rather own the power than the building — the utility, the turbine order book, the interconnection queue position. Those are the parts that stay scarce whether or not any individual data center pencils out. That's the granularity-of-growth point, actually: the returns aren't in the sector, they're in one layer of it.
+
+---
+
+ANDREW: Healthcare, and it's a capital-formation day rather than a science day.
+
+AVA: Which is its own signal. Three of the four items are about how money is being raised or where it's being put, not what's being discovered.
+
+ANDREW: Start with McKinsey. They published an interview with Seema Verma — former CMS administrator, now running Oracle Health — on payment reform and health-data interoperability.
+
+AVA: Read this one properly rather than skimming it, because Verma sits at the exact hinge you're building a career on. CMS is the largest single payer in American healthcare. When CMS changes how it pays — bundled payments, risk adjustment, site-neutral rules — it changes the unit economics of every provider category downstream. Private equity in healthcare services is, to a first approximation, a bet on being on the right side of a CMS rule change.
+
+ANDREW: And the interoperability half?
+
+AVA: The interoperability half is the more investable one, and it's underrated. Data portability determines switching costs. If patient records genuinely move between systems, the incumbent EHR moat gets shallower and the whole care-navigation and payer-services category gets more contestable. Verma running Oracle Health means she's now on the incumbent side of a rule she helped write. That's worth noticing, and it's the kind of thing that makes a good question at a networking event rather than a good statement.
+
+ANDREW: Roche next. Seven hundred fifty million dollars into expanding their Oregon manufacturing site.
+
+AVA: The number matters less than the pattern. This is the fourth or fifth large onshoring commitment from a major pharma in about eighteen months. The drivers are tariff exposure and BIOSECURE-style supply-chain politics, and the effect is that manufacturing footprint is quietly turning into a strategic asset rather than a cost center.
+
+ANDREW: Which has a private-equity implication.
+
+AVA: A direct one. If branded pharma is building domestic capacity, contract manufacturers — CDMOs — become more valuable, because the same political pressure that pushes Roche to build also pushes mid-cap biotech to source domestically without building anything themselves. Domestic CDMO capacity is a constrained, contracted, cash-generative asset with a policy tailwind. That's close to a textbook sponsor target. Watch that space.
+
+ANDREW: Third: Ambros, a pain-drug developer, going public via reverse merger with Werewolf.
+
+AVA: This is the one I'd carry into a conversation, because it's a market-structure tell rather than a company story. Let's do it properly in a minute.
+
+ANDREW: Then finish the sweep. Padcev is sidelining checkpoint rivals in bladder cancer, per FirstWord's Spotlight.
+
+AVA: Antibody-drug conjugates continue to eat monotherapy share. The pattern across oncology for three years now is that the combination beats the single agent, and the ADC keeps being the half of the combination that's growing. If you're in any Lilly or J and J oncology conversation at work, the useful framing is that checkpoint inhibitors are becoming the backbone rather than the product — valuable, but no longer where the incremental share is won.
+
+ANDREW: Chai AI signed an antibody-discovery deal with Bristol Myers Squibb. And a16z Bio published a why-we-invested on Lila Sciences, Oura, and Function Health.
+
+AVA: Hold Chai for the threads segment — it's the fourth data point in a run. The a16z piece is a clean read on consumer longevity plus autonomous labs. The honest critique is that Oura and Function are consumer-subscription businesses wearing a healthcare costume; the interesting question is whether continuous consumer data ever becomes clinically actionable, because that's the only path from good retention to genuine healthcare economics.
+
+ANDREW: And JAMA had freeze-dried plasma approved, a Cyclospora outbreak retrospective, and an organoids explainer.
+
+AVA: Freeze-dried plasma is a quiet one with real logistics consequences for trauma and military medicine. Worth a name-check, not a deep dive.
+
+---
+
+ANDREW: Right, let's do reverse mergers. Ambros is going public by merging into Werewolf, which is already listed. Why is that a signal?
+
+AVA: Because of what it substitutes for. There are two ways into the public market. The front door is an IPO — you file, you roadshow, you price, and the process itself is a market test. The side door is to merge into an already-listed company that has a stock exchange listing and, usually, a disappointing pipeline and a pile of cash. You take the shell's listing; the shell's shareholders take a slice of your company.
+
+ANDREW: And that trade only makes sense in specific conditions.
+
+AVA: It makes sense when the front door is shut. Biotech issuance has been in a drought — that's been true through most of twenty twenty-five and into this year. When companies that need capital can't IPO, they go looking for shells. So the volume of reverse mergers is genuinely informative: it's a measure of how many companies want to be public divided by how many can be.
+
+ANDREW: Historical parallel?
+
+AVA: Two, and they point in opposite directions, which is why I'd be careful. The constructive one is two thousand nine and twenty ten — a wave of reverse mergers after the financial crisis that did in fact precede a real reopening of the biotech window. The cautionary one is twenty twenty-two and twenty twenty-three, when the SPAC unwind left dozens of listed shells and the reverse-merger wave that followed was mostly companies dissolving into each other. Same mechanic, completely different meaning.
+
+ANDREW: So how do you tell which one you're in?
+
+AVA: Look at direction of travel. In a thaw, the private company is the one with the science and the shell is the one with the cash, and new money comes in alongside the merger — a concurrent private placement. In a wind-down, there's no new money; it's two balance sheets consolidating to extend runway. So the diagnostic question on Ambros is simple: did anyone write a fresh check as part of this deal? If yes, it's evidence of a thaw. If it's just the merger, it's cash-preservation with a listing attached.
+
+ANDREW: That's a good question to have in your pocket.
+
+AVA: It's better than the alternative, which is repeating a headline about the biotech window reopening and being asked why.
+
+---
+
+ANDREW: AI. Three items and a long read.
+
+AVA: Cerebras announced the CS-4 — wafer-scale, claiming roughly ten times the efficiency of the CS-3. We flagged this yesterday too, and my caution is unchanged: efficiency claims from specialty silicon are measured on workloads the vendor selected. The strategic question isn't whether the chip is fast. It's whether anything other than Nvidia can accumulate a software ecosystem, because that's the actual moat and it's the thing every challenger has failed at for a decade.
+
+ANDREW: Second, from The Batch: Anthropic is watermarking outputs, and Qwen's open-weight models are surging.
+
+AVA: Those belong together. The gap between the best closed model and the best open-weight model keeps compressing, and that compression is the single most important variable in enterprise build-versus-buy. If open weights are ninety percent as good at a fraction of the cost, the frontier labs' pricing power has to come from somewhere other than raw capability — reliability, indemnification, compliance, deployment. Watermarking is a small piece of that same move: it's provenance as a product feature.
+
+ANDREW: Third, Duolingo as an AI content engine — from Business Analytics.
+
+AVA: A genuinely good case study, and it maps onto marketing coursework cleanly. Duolingo used generative models to collapse the marginal cost of producing course content. What that does is change the shape of the catalog: when content costs almost nothing to make, you can serve the long tail of small languages that could never justify a human curriculum team. The customer-lifetime-value implication is that acquisition cost in a niche stops being the binding constraint, because the content to serve that niche is nearly free. That's an argument you can use in any content business, not just this one.
+
+ANDREW: And the Economist's long read on whether AI could be conscious.
+
+AVA: Flag it for the backlog rather than skimming. The reason to read it isn't the philosophy. It's that this is how a serious generalist publication is framing the question for non-technical executives — and that framing is what the people across the table from you will have read.
+
+---
+
+ANDREW: Threads. What's connecting across the week?
+
+AVA: Thread one, and it's now hard to miss: AI for drug discovery has produced four distinct data points in roughly a week. The AIDO Cell work on the eighteenth. Enveda pushing an AI-discovered compound into Phase Two on the nineteenth. The Opus Five binder benchmark, also the nineteenth. And now Chai signing with Bristol Myers Squibb.
+
+ANDREW: Two days ago you said the story had shifted from whether models can propose molecules to whether the molecules survive contact with a clinic. Has it moved again?
+
+AVA: It's moved a third time, and this is the part worth saying out loud. The Chai deal is not a science event, it's a value-capture event. Pharma is renting the models rather than building them. That tells you the large incumbents have decided model-building is not where their advantage lies — their advantage is trials, regulatory, and commercial. Which raises the uncomfortable question for the AI-bio startups: if your customer is a rental customer, what stops them renting from someone else in three years? The moat has to be data or workflow lock-in, not model quality, because model quality is the thing that commoditizes fastest.
+
+ANDREW: Thread two.
+
+AVA: Onshoring. Roche's Oregon expansion today, sitting on top of eighteen months of similar moves. This is the Smoot-Hawley-adjacent point, though I'd make it carefully: the lesson of tariff regimes isn't only that trade falls. It's that firms make long-lived capital commitments to a policy that may not outlive the administration that created it. Some of this capacity is being built for political reasons and will have to earn a return on economic ones.
+
+ANDREW: Thread three is the one we opened with.
+
+AVA: The one we opened with, yes, and it now runs three ways. The grid as the binding constraint on Wednesday, the term premium on Thursday, the financing casualties today. Compute scarcity became power scarcity became capital scarcity, in about seventy-two hours. If you want a single sentence for a networking conversation, it's this: the AI buildout has stopped being a technology story and become a project-finance story, and project finance is priced at the long end of the curve.
+
+ANDREW: Which is uncomfortably convenient for you.
+
+AVA: It is convenient, and you should say it anyway, because it's true and because it's the sentence that makes the last week cohere.
+
+---
+
+ANDREW: Action items. Five, and then we're done.
+
+AVA: One. Investment Management and Financial Derivatives start next Thursday. Everything we've discussed for three days — term premium, duration, the shape of the curve, discount rates on long-lived assets — is week-one vocabulary in both. Re-read yesterday's bond thread and today's mechanism workshop as pre-work, not as news.
+
+ANDREW: Two. The Verma interview is a proper read, not a skim, and it connects to the opinion-writing decision sitting on your Hub. If you're going to write something in the health-policy space, payment reform and interoperability is the intersection where your ZS experience and your PE thesis actually overlap.
+
+AVA: Three. Put a question in your pocket on Ambros: was there a concurrent financing? That single fact determines whether the reverse merger is a thaw signal or a runway extension, and having the question ready is worth more than having a view.
+
+ANDREW: Four. The AI-for-bio thread now has four entries. That's a Key Themes candidate — the framing to capture is the shift from capability to value capture, because that's the version of the argument that isn't in anyone's newsletter.
+
+AVA: Five, and it's a research task rather than a reading task. If the data-center story is really a project-finance story, then the interesting exposure is the power layer — utilities with interconnection queue positions, turbine manufacturers, grid equipment. Spend twenty minutes mapping who actually sits in that layer. It's the kind of question a partner would expect you to have already asked.
+
+ANDREW: That's Friday. Have a good weekend, Anurag.
+
+AVA: And if anyone at a weekend event tells you data centers are a real-estate play, ask them what they've assumed for residual value in twenty forty-one. Watch what happens.

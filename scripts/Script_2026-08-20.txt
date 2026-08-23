@@ -1,0 +1,123 @@
+ANDREW: Daily Reading. Thursday, August twentieth, twenty twenty-six. Good morning, Anurag. Something new today: I've got company. Ava is joining as resident skeptic, and her job is to push back when I get too tidy.
+
+AVA: Which, spoiler, happens by minute three. Let's get into it. Andrew, what's the lead?
+
+ANDREW: The lead is that yesterday's story got a sequel in under twenty-four hours. Yesterday we told you the bond selloff had three drivers — the war, sticky inflation, and AI's appetite for debt — and that the thirty-year Treasury was pressing toward levels nobody under forty has traded. This morning, the Treasury Department blinked. It announced it will more than double its buybacks of ten, twenty, and thirty-year debt — from two billion dollars per operation to at least four billion — starting September ninth.
+
+AVA: And the market's first read was exactly what you'd expect. The thirty-year yield dropped about nine basis points on the announcement, back toward five point two percent. Then it gave most of that back by this morning. Which tells you the market took one look at the size of the tool and one look at the size of the problem, and did the division.
+
+ANDREW: Do the division for us.
+
+AVA: Treasury is buying back roughly four billion per operation. Total coupon supply this quarter is north of seven hundred billion. Buybacks are a liquidity tool — they smooth trading in old, off-the-run bonds. They do not remove supply, because Treasury funds the buyback by issuing new debt somewhere else on the curve. So the fiscal arithmetic is untouched. What's actually driving the thirty-year toward five and a quarter is the term premium — the extra yield investors demand to lock money up for thirty years instead of rolling short-term bills. That premium is rising because investors are losing confidence in the long-term fiscal picture, and no buyback schedule changes that.
+
+ANDREW: So why do it at all?
+
+AVA: Because being seen doing something is itself a policy tool. And here's the historical rhyme worth carrying into a networking conversation: this is Operation Twist with a press release. In nineteen sixty-one, and again in twenty eleven, the government tried to hold down long rates by shifting demand toward the long end without changing the total. It worked a little, briefly, both times. The lesson wasn't that twisting works. The lesson was that when officials start managing the shape of the curve, they're telling you which price they're afraid of.
+
+ANDREW: And the price they're afraid of is the thirty-year, because that's the one that sets mortgage rates and infrastructure financing. Hold that thought, because it comes back in the AI segment.
+
+---
+
+ANDREW: The Fed. Two items, both about the new regime. First, the Fed announced five task forces to re-examine how it conducts monetary policy — one of them dedicated entirely to how the Fed communicates. That's Chair Warsh's project: he has been openly critical of the Fed speaking with what he calls too many voices.
+
+AVA: The subtext matters more than the org chart. A new chair launching a top-to-bottom review of the framework, in a year when the minutes came out more hawkish than expected — that's a chair signaling the old reaction function is up for renegotiation. If you're building any rate assumption right now, the honest answer is that the reaction function itself is uncertain, which is precisely the condition under which term premiums rise. Notice how that loops straight back into the lead story.
+
+ANDREW: Second item: there's no Fed meeting in August. The next real information event is Jackson Hole, August twenty-seventh through the twenty-ninth. First Jackson Hole speech for Warsh as chair. That's the one to watch, not the data between now and then.
+
+AVA: Quick mechanism note for anyone newer to this: Jackson Hole is technically just a conference, but chairs use it to preview doctrine. Volcker, Greenspan, Bernanke, Powell — the big framework turns got announced in Wyoming, not at FOMC meetings. So an untested chair plus five task forces plus a hawkish set of minutes means the speech is a genuine event risk, in both directions.
+
+ANDREW: Meanwhile equities shrugged. Stocks snapped a three-day losing streak yesterday — modest gains, nothing dramatic. The tension underneath is unchanged: policymakers still worried about inflation, while long-term borrowing costs become a problem in their own right.
+
+---
+
+ANDREW: Healthcare. And it was a genuinely big day at the FDA — two approvals, both in rare disease, both worth your attention for different reasons. First, Regeneron's Pasatru — garetosmab — approved for fibrodysplasia ossificans progressiva. FOP. The disease where the body's soft tissue progressively turns to bone.
+
+AVA: Ultra-rare — on the order of nine hundred known patients in the US. Which makes it a perfect case study in orphan-drug economics. The entire commercial thesis lives or dies on price per patient, because volume is fixed and tiny. Watch the list price when it's announced. That number is the whole business model.
+
+ANDREW: Second approval, and the bigger one strategically: the FDA granted accelerated approval to Ultragenyx's Genglycos, a gene therapy for glycogen storage disease type one-a, in patients eight and older. One-time treatment for a metabolic disease that otherwise requires patients to dose cornstarch around the clock — literally — to avoid fatal hypoglycemia.
+
+AVA: Two things make this strategically interesting rather than just clinically interesting. First, it's accelerated approval — cleared on a surrogate endpoint, with confirmatory evidence still to come. The FDA extending that pathway to gene therapy is a regulatory posture shift, and posture shifts move entire pipelines, not single drugs. Second, the reimbursement problem: a one-time cure breaks the insurance model, because the payer who funds the therapy this year hands the benefit to whichever payer covers the patient for the next fifty. Every durable gene therapy has this problem. Nobody has solved it. Outcomes-based installment deals are the current patch.
+
+ANDREW: And the venture-side data point that completes the healthcare picture: Network Bio launched out of Palo Alto yesterday with fifty million dollars from Section Thirty-Two, Thiel Bio, Founders Fund, Breyer Capital, and others — building AI models trained on human biological data.
+
+AVA: Which makes it the fourth AI-for-biology data point in seven days. Count them: the Nobel laureate's AIDO Cell on the eighteenth. Enveda pushing an AI-discovered drug into Phase Two on the nineteenth. The Claude drug-binder benchmark, fourteen of fifteen targets, same day. Now a fifty-million-dollar foundation-model launch backed by exactly the investors you'd expect. One is an anecdote. Four in a week is capital rotating into a thesis. The question we flagged yesterday still stands and still has no answer: do AI-originated molecules survive contact with a clinic? Enveda's Phase Two is the first real test. Nothing this week changed that — the money is simply arriving before the evidence.
+
+ANDREW: Which is either conviction or momentum, and the honest answer is you can't tell from the outside.
+
+---
+
+ANDREW: Private equity, healthcare services. Two deals worth logging. Gridiron Capital invested in van den Boom and Associates, an outsourced-pharma-services firm — part of a deliberate thematic platform they're assembling in pharma services. And Marlin Equity's Radar Healthcare bought Cemplicity, a patient-reported-outcomes platform — its second add-on after EIDO Healthcare.
+
+AVA: Neither deal is large, but together they're a clean read on where sponsor behavior sits in twenty twenty-six: platform plus add-ons, in services adjacent to pharma rather than in providers directly. And PwC's midyear deals outlook confirmed the pattern — buyers are paying for reimbursement visibility and margin durability, and, this is the line to remember, AI has moved from experimentation to a diligence requirement. Two years ago an AI story padded the CIM. Now the absence of one is a red flag in diligence.
+
+ANDREW: Worth saying plainly for the interview file: "AI is now a diligence item, not a differentiation item" is a partner-grade sentence, and it's supported by this week's deal flow.
+
+---
+
+ANDREW: Strategy corner. McKinsey's State of Organizations twenty twenty-six is out — it was your flagged weekend read, and now the numbers are circulating. Ava, give us the three that matter.
+
+AVA: Sixty-two percent of organizations are at least experimenting with AI agents. Only twenty-three percent are scaling them anywhere. And the barrier at the top of the list is not regulation and not technical capability — it's security and trust, cited by nearly two-thirds. Here's the stat I'd actually deploy in conversation, though: among high performers, sixty-five percent have defined human-in-the-loop validation processes. Among everyone else, twenty-three percent. That forty-point gap is the whole story. The winners aren't the ones with better models. They're the ones who built the boring control layer.
+
+ANDREW: Which rhymes with the agent-trust findings from the fourteenth and fifteenth — enterprise adoption stalling on trust, not capability. Three sightings of the same pattern in one week, from three different sources.
+
+AVA: And it gives you a ready-made diligence question for any portfolio company claiming an AI transformation: don't ask what models they use. Ask who signs off when the agent is wrong, and how fast they find out. If there's no crisp answer, the transformation is a slide, not a system.
+
+---
+
+ANDREW: AI and infrastructure, quickly, because the theme is continuity rather than news. Model releases have hit software-patch cadence — eleven new models from seven providers in August alone. GLM five-point-three, Gemini three-point-seven Flash, a DeepSeek release priced at forty-three cents per million tokens.
+
+AVA: Forty-three cents. Keep that number next to the OpenAI-versus-Anthropic revenue divergence from yesterday. When the frontier moves this fast, the frontier itself commoditizes, and pricing power migrates to whoever owns distribution and workflow — not whoever has this month's best benchmark. That's been our commoditization thread for months, and every week adds a data point.
+
+ANDREW: On the physical side: a three-billion-euro AI campus proposed in central Spain, Samsung Heavy Industries signing an agreement to build floating data centers — literally moored offshore — and Pat Gelsinger, former Intel chief, arguing at a conference that the GPU-plus-high-bandwidth-memory stack is fundamentally power-hungry and inefficient.
+
+AVA: Floating data centers are what the market invents when land, grid interconnects, and cooling water all become binding at once. It connects the Wharton grid piece from yesterday to the neocloud economics from last week. And notice the full loop we've now closed across two episodes: AI needs debt, which pushes up the cost of capital — that was yesterday's lead. AI needs power, which pushes up the cost of electricity — that's today's. Same boom, two prices, and the Treasury buyback story shows the government now managing one of them.
+
+ANDREW: That's the cross-temporal picture in one breath: crowding out in capital, crowding out in kilowatts.
+
+---
+
+ANDREW: Mechanism workshop. We do one concept properly each episode, and today it has to be duration, because it explains why this week's bond story is scarier than the headlines make it sound. Ava, the floor is yours.
+
+AVA: All right. Duration is the answer to a simple question: if yields move one percentage point, how much does my bond's price move? For a thirty-year bond, the answer is roughly twenty percent. Not two. Twenty. Long bonds are levered to rate changes even with no leverage in the position, because you're locked into old coupons for three decades while the world reprices around you.
+
+ANDREW: So walk through what that means for someone who bought thirty-year Treasuries at the lows.
+
+AVA: Someone who bought the thirty-year in twenty twenty, when it yielded barely more than one percent, is sitting on a price loss of well over forty percent on the safest credit on earth. That's the quiet fact underneath every story we've done this week. It's why banks with big bond portfolios get nervous when the long end sells off — that was the Silicon Valley Bank lesson in twenty twenty-three. It's why pension funds, who are structurally forced to own duration, are the ones charging that rising term premium we keep talking about. And it's why a nine-basis-point rally on the buyback news was worth reporting at all: nine basis points on a thirty-year is real money — roughly one and a half percent of price.
+
+ANDREW: And the connection to the AI debt story?
+
+AVA: Direct. When hyperscalers issue thirty and forty-year infrastructure debt, they're selling duration into a market that's already choking on it from the Treasury. Every duration seller competes with every other duration seller, regardless of credit quality. So the marginal buyer of a data-center bond and the marginal buyer of a Treasury bond are, increasingly, the same investor with the same risk budget. That's the precise sense in which the AI boom moves mortgage rates — it's not a metaphor, it's a shared buyer.
+
+ANDREW: One sentence for the networking version?
+
+AVA: "Duration is the one risk you can't diversify inside the bond market — you can only price it, and right now the price is going up." If the person across the table nods slowly, they've traded bonds. If they change the subject, they haven't.
+
+---
+
+ANDREW: One more healthcare thread before we close the loop, because it deepened this week without making headlines. Healthcare is becoming AI's legitimacy test — that was the framing from the Healthcare AI Guy newsletter on the eighteenth, with Commure's seven-billion-dollar valuation getting public scrutiny.
+
+AVA: And you should read the Commure scrutiny alongside today's Network Bio launch, because together they bracket the entire healthcare AI market. At one end: a seven-billion-dollar revenue-stage company having its growth math examined line by line. At the other: a day-zero company raising fifty million on a thesis and a team. The interesting question is which end the next repricing starts from. Historically — and this is the dot-com pattern worth naming — corrections start at the revenue-stage end, because that's where claims are checkable. You can't falsify a thesis-stage company. You can absolutely falsify a growth deck.
+
+ANDREW: The McKinsey State of Organizations stat pack gives you the demand-side reason for caution too. If only twenty-three percent of enterprises are scaling agents anywhere, then a lot of healthcare AI revenue projections are assuming adoption curves the buyers themselves say they're not on yet.
+
+AVA: Which is a sentence you can use in any diligence meeting this fall: "the vendor's revenue model assumes an adoption rate the customer surveys don't support." Fifteen words, and it's the entire bear case on late-stage healthcare AI right now. Note the caveat on the other side, though — surveys lag deployment, and the twenty-three percent was collected months before publication. If agent adoption inflects, the bear case ages badly. That's why you hold it as a question, not a conviction.
+
+---
+
+ANDREW: Action items. Three today, kept deliberately tight.
+
+AVA: One. Before Jackson Hole starts on the twenty-seventh, write down — actually write down — what you think Warsh believes about the neutral rate. The five task forces and the hawkish minutes are the evidence you have. If his speech surprises you, you'll know exactly which assumption was wrong. That's cheap calibration training, and it's exactly the numerator-and-denominator discipline from yesterday applied to a live event.
+
+ANDREW: Two. The Ultragenyx approval is the one to spend twenty minutes on. Not the science — the payment problem. One-time cures versus annuity-based insurance is a genuine unsolved structural question in healthcare finance, it shows up in PE diligence on any gene-therapy-adjacent asset, and almost nobody at a networking event can explain it cleanly. You can be the person who can.
+
+AVA: Three. Add the AI-for-bio tracker to the Key Themes database if it isn't there already as its own thread — four data points in seven days deserves a named thread with a falsifiable question attached: does an AI-originated molecule clear Phase Two? Everything else in that space is commentary until that answer arrives.
+
+---
+
+ANDREW: The partner line to carry into the day, and then we'll let you go. Yesterday the story was that AI borrowing competes with the Treasury for capital. Today the Treasury started defending the long end of the curve. So the line is this: the bond market spent the week telling Washington what it thinks of the fiscal path, and Washington's answer was a liquidity operation — which is a little like answering a solvency question with a comfort letter.
+
+AVA: The eighteen seventy-three railroads got comfort letters too, right up until they didn't. The infrastructure survived. The first equity holders did not. Same as it ever was.
+
+ANDREW: That's Daily Reading for Thursday, August twentieth. The quiz is on the site — about twelve minutes, weighted toward the term premium and the gene-therapy payment problem, because those are the two mechanisms this week that will still matter next year. Talk to you tomorrow.
+
+AVA: See you tomorrow, Anurag.

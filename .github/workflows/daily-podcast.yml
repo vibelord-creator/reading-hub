@@ -1,0 +1,168 @@
+name: Daily Reading podcast
+
+# Runs entirely on GitHub's infrastructure -- no local machine required.
+# 09:10 UTC is ~05:10 ET during EDT and ~04:10 ET during EST. GitHub's cron is
+# best-effort and routinely fires 5-30 minutes late on shared runners, so this
+# is deliberately scheduled early rather than at the exact target time.
+on:
+  schedule:
+    - cron: "10 9 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Episode date (YYYY-MM-DD). Blank = today in America/New_York."
+        required: false
+      force:
+        description: "Rebuild even if the episode already exists"
+        type: boolean
+        default: false
+
+concurrency:
+  group: daily-podcast
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      # Skip the ~350 MB of historical MP3s. generate_site.py recovers their
+      # byte lengths from the committed feed.xml instead of statting files.
+      - name: Checkout (no audio blobs)
+        uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !Daily_Reading_*.mp3
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet edge-tts
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -1
+          edge-tts --version || true
+
+      - name: Resolve date and check idempotency
+        id: plan
+        run: |
+          DATE="${{ inputs.date }}"
+          [ -z "$DATE" ] && DATE=$(TZ=America/New_York date +%F)
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          echo "Episode date: $DATE"
+          if git ls-files --error-unmatch "Daily_Reading_${DATE}.mp3" >/dev/null 2>&1 \
+             && [ "${{ inputs.force }}" != "true" ]; then
+            echo "Episode already committed; nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch Notion digest
+        if: steps.plan.outputs.skip == 'false'
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: python pipeline/fetch_digest.py "${{ steps.plan.outputs.date }}" /tmp/digest.json
+
+      - name: Write script and quiz
+        if: steps.plan.outputs.skip == 'false'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          EPISODE_MODEL: ${{ vars.EPISODE_MODEL || 'claude-opus-5' }}
+        run: |
+          D="${{ steps.plan.outputs.date }}"
+          python pipeline/write_episode.py /tmp/digest.json "$D" \
+            "scripts/Script_${D}.txt" /tmp/quiz.json
+
+      - name: Synthesize audio
+        if: steps.plan.outputs.skip == 'false'
+        run: |
+          D="${{ steps.plan.outputs.date }}"
+          # Build in /tmp: the turn cache is scratch and must not be committed.
+          cp "scripts/Script_${D}.txt" /tmp/
+          ( cd /tmp && python "$GITHUB_WORKSPACE/pipeline/build_dialogue.py" \
+              "Script_${D}.txt" "Daily_Reading_${D}.mp3" )
+          cp "/tmp/Daily_Reading_${D}.mp3" .
+
+      - name: Verify audio is sane
+        if: steps.plan.outputs.skip == 'false'
+        run: |
+          D="${{ steps.plan.outputs.date }}"
+          F="Daily_Reading_${D}.mp3"
+          SIZE=$(stat -c%s "$F")
+          SECS=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$F" | cut -d. -f1)
+          WORDS=$(sed -E 's/^(ANDREW|AVA)://' "scripts/Script_${D}.txt" | wc -w)
+          RATE=$(python -c "print(round($WORDS/max($SECS,1),2))")
+          echo "size=${SIZE}B duration=${SECS}s words=${WORDS} rate=${RATE} w/s"
+          # A truncated edge-tts turn shows up as an implausibly high words/second.
+          [ "$SIZE" -gt 4000000 ] || { echo "::error::MP3 only ${SIZE} bytes"; exit 1; }
+          [ "$SECS" -gt 720 ]     || { echo "::error::Only ${SECS}s of audio"; exit 1; }
+          python -c "import sys; sys.exit(0 if $RATE < 3.5 else 1)" \
+            || { echo "::error::${RATE} words/sec implies truncated audio"; exit 1; }
+
+      - name: Build quiz
+        if: steps.plan.outputs.skip == 'false'
+        run: |
+          D="${{ steps.plan.outputs.date }}"
+          python pipeline/build_quiz.py /tmp/quiz.json "$D" \
+            pipeline/quiz_template.html "Quiz_${D}.html"
+
+      - name: Regenerate feed, index and quiz shortcut
+        if: steps.plan.outputs.skip == 'false'
+        env:
+          PODCAST_TITLE: Anurag Daily Reading
+          PODCAST_AUTHOR: Anurag Maken
+          PODCAST_EMAIL: anuragmaken@gmail.com
+          PODCAST_DESC: >-
+            A daily McKinsey-partner-level audio digest of the news, frameworks,
+            and cross-temporal threads from your reading list.
+        run: |
+          python generate_site.py . . "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          grep -q "Daily_Reading_${{ steps.plan.outputs.date }}.mp3" feed.xml \
+            || { echo "::error::Today's episode is missing from feed.xml"; exit 1; }
+
+      - name: Commit and push
+        if: steps.plan.outputs.skip == 'false'
+        run: |
+          D="${{ steps.plan.outputs.date }}"
+          git config user.name  "Daily Reading Bot"
+          git config user.email "anuragmaken@gmail.com"
+          git add --sparse "Daily_Reading_${D}.mp3" "Quiz_${D}.html" \
+                           "scripts/Script_${D}.txt" feed.xml index.html quiz.html
+          git status --short
+          git diff --cached --quiet && { echo "Nothing to commit"; exit 0; }
+          git commit -m "Daily reading update ${D}"
+          git push
+
+      - name: Report failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const date = "${{ steps.plan.outputs.date }}" || "unknown";
+            const url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Daily Reading] Build failed ${date}`,
+              body: [
+                `The automated build for **${date}** failed.`,
+                ``,
+                `- Run log: ${url}`,
+                `- Yesterday's episode is still the newest one in Apple Podcasts, so the feed is not broken.`,
+                `- Partial artifacts are not retained; re-run with **Run workflow -> force** once the cause is fixed.`,
+                ``,
+                `Most likely causes, in order: Microsoft rate-limiting edge-tts from CI IPs;`,
+                `the Notion digest for ${date} not existing yet; an expired NOTION_TOKEN or ANTHROPIC_API_KEY.`
+              ].join("\n")
+            });

@@ -1,0 +1,6 @@
+.credentials
+.*_turns/
+.*_chunks/
+.*_pieces/
+*.pyc
+__pycache__/
