@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — October 17, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Saturday, October 17, 2026 — Episode Daily_Reading_2026-10-17.mp3</div>
+    <div class="meta">
+      <span>25 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+  <div class="q" data-id="1" data-keys="not in that business;forward guidance;october 28;volatility" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> What did Kevin Warsh say in Bangkok when pressed on rates, and what practice is he retreating from?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="7;three years;long;treasury;10-year" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> Where are mortgage rates, and what are they actually priced off?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="standalone;11;1998;passive" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> What is MSCI considering for Indonesia, and how did the market react?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="unicredit;commerzbank;48;year end" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> What did the ECB approve in European banking, and what stake does the buyer hold?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="25.2;7.5;7.3;2.5;38.4" data-threshold="3">
+    <div class="q-text"><span class="q-num">5.</span> Give the EU August goods trade figures, including the machinery swing and the China deficit.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="11;68;27" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> How much did Harvard&#x27;s endowment grow, to what total, on what return?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="chmp;orforglipron;second oral;98;105" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What happened with Lilly&#x27;s Foundayo, and how has the US launch gone?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="200;18;11.1;25;103;93" data-threshold="3">
+    <div class="q-text"><span class="q-num">8.</span> Give the key City Therapeutics IPO and Estuary financing numbers.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="816;42;1m;mac studio" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> What are Meta Muse Spark Open&#x27;s key specs?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="12;37;100;sponsored" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> What did the Mercor CPA study find?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks and mechanisms</h2>
+  <div class="q" data-id="11" data-keys="extra yield;ten-year;short;issuance;supply" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> What is the term premium, and why does Yglesias tie affordability to the deficit?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="2022;capital;lend;unhedged;mark" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> What did the SF Fed letter find about bank securities losses and lending?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="extra yield;government;default;ai" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> What is a credit spread, and what does a widening tech-sector spread signal?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="cost of money;balance sheet;levered;credit supply;payback" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> Describe the three-link chain framework from deep dive one.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="right;obligation;second supplier;insurance;1973;oil" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> What is the real options frame for geopolitics, and what historical parallel was used?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="reinforcement;code;maths;checked;judgment;strategy" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> What is Andrew Ng&#x27;s verifiable vs judgement distinction, and why does it matter for consulting?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="18;cost per task;reasoning;opus" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> Why can per-token pricing mislead an AI business case?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="router;sub-network;active;compute;token" data-threshold="2">
+    <div class="q-text"><span class="q-num">18.</span> What is a mixture-of-experts model, and why does it matter commercially?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections across the week</h2>
+  <div class="q" data-id="19" data-keys="5.35;5.1;3.7;6.3;1,000;7" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Trace the rates-to-credit arc of the week, with numbers.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="kospi;circuit;1998;concentrated;diversify" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> Link the Korea selloff and the Indonesia drop. What&#x27;s the common factor?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="21" data-keys="8;230;40;1.5;milestone" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> How do the Stoffels and AstraZeneca–insitro deals share a structure?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="iowa;consumer fraud;agent;promise;liability" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> What new angle on the eight state OpenAI suits connects to a16z&#x27;s Wallet Wars?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items</h2>
+  <div class="q" data-id="23" data-keys="28;29;fed;fda;lilly" data-threshold="3">
+    <div class="q-text"><span class="q-num">23.</span> Which dates should be blocked together, and why?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="24" data-keys="19;21;23;monday;alberta" data-threshold="3">
+    <div class="q-text"><span class="q-num">24.</span> What are the Jio Platforms and Alberta dates to watch?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="25" data-keys="november 15;40;ai;biotech;solar" data-threshold="2">
+    <div class="q-text"><span class="q-num">25.</span> What is the comment deadline on China&#x27;s draft export list, and what does it cover?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 25 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>19–25 correct:</strong> You internalized the material. You could brief a partner this morning.</li>
+      <li><strong>14–18 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>9–13 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 9:</strong> Re-listen at 0.9x with the script open. Quiz again tomorrow.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  "1": "He said \"we're not in that business anymore\" — a deliberate retreat from forward guidance, signalling the future rate path to move long rates today. Less guidance means more volatility around each meeting; the next decision is October 28.",
+  "2": "Above 7%, the highest in more than three years. Mortgages are priced off long Treasury yields, not the Fed's overnight rate, so short-end moves don't automatically help housing.",
+  "3": "MSCI may relabel Indonesia a 'standalone market' over opaque shareholding and suspected coordinated trading. Jakarta's main index fell 11%, its worst day since 1998. Passive money tracking the index would be forced to sell.",
+  "4": "The ECB cleared UniCredit to take over Commerzbank. UniCredit already holds 48% and expects control by year end — the first real cross-border European bank consolidation in years.",
+  "5": "Deficit of €25.2bn vs €7.5bn a year earlier. Machinery and vehicles swung from a €7.3bn surplus to a €2.5bn deficit. The China deficit rose from €30.1bn to €38.4bn.",
+  "6": "Up $11bn to a record $68bn, a 27% one-year return — meaning more LP capital likely available for PE and VC funds.",
+  "7": "Foundayo (orforglipron) got a positive CHMP opinion, putting it on track as the second oral GLP-1 cleared in the EU. US Q2 sales were $98m vs forecasts near $105.6m. Lilly reports Q3 on Oct 29.",
+  "8": "City Therapeutics raised about $200m, pricing 11.1m shares at $18 (upsized), and rose about 25% on day one. Estuary launched with $103m: a $93m Series A led by RA Capital plus a $10m seed.",
+  "9": "816bn total parameters, about 42bn active per request, a 1M-token context window, runs on two Apple Mac Studios.",
+  "10": "12 CPAs vs frontier models on four real accounting tasks: accountants averaged about 37%, Opus 5 scored 100%. It was a sponsored study, so treat the framing carefully.",
+  "11": "The extra yield investors demand for holding a 10-year bond rather than rolling short bills, as compensation for inflation and rate surprises. Heavy issuance or weaker fiscal confidence raises it, pushing up mortgage and corporate borrowing costs.",
+  "12": "Banks with bigger 2022–23 securities losses cut business lending more, especially where losses were unhedged or marked to market and counted against regulatory capital. Less capital means less room to lend, so hikes bite harder than the rate implies.",
+  "13": "The extra yield over safe government debt that investors demand for default risk. A sector spread widening on its own means lenders want extra compensation specifically for that sector — here, AI-related exposure.",
+  "14": "(1) The cost of money rises; (2) lenders' balance sheets shrink, so credit supply tightens beyond the rate alone; (3) the most levered, longest-payback borrowers get squeezed first — today, AI infrastructure like CoreWeave.",
+  "15": "Keeping a second supplier, site or model vendor is paying a premium for the right, not the obligation, to switch later. Waste in a stable world, insurance in a predatory one. Parallel: the 1973 oil embargo turning energy security into a strategic line item.",
+  "16": "RL works well where answers can be checked automatically (code, maths) and badly where they can't (customer responses, strategy calls). Analysis is being automated; judgment — choosing the question, owning the value-creation thesis — is not.",
+  "17": "Sonnet 5.5's cost per task varies more than 18x across reasoning levels; at max effort it costs more per task than Opus 5.5. Measure cost per completed task at the effort level you'll actually use.",
+  "18": "The model holds many specialist sub-networks and a router picks a handful per token, so you get large-model quality at small-model compute. Capability moving onto desktop hardware erodes per-token API pricing power.",
+  "19": "Last Friday 10-year at 5.35%; Monday WSJ economists' year-end forecast raised to 5.1%; Thursday CPI 3.7%; Friday PPI 6.3% y/y and CoreWeave CDS past 1,000bp (~60% five-year default odds); today CDS up 16% in a week, AI issuance halving, mortgages above 7%.",
+  "20": "KOSPI fell over 7% and tripped a circuit breaker (chips); Indonesia had its worst day since 1998 (governance). Common factor: global growth concentrated in very few countries, leaving little to diversify against.",
+  "21": "Armed Cell Therapeutics: about €8m upfront, up to $230m milestones plus low single-digit royalties. AZ–insitro: $40m upfront vs about $1.5bn headline. Milestones defer real money until the asset proves itself.",
+  "22": "Iowa led under its Consumer Fraud Act; no suit relies on a new AI law. One count treats agent testing as consumer fraud — but nobody promises what an autonomous agent does. Wallet Wars asked who makes the customer whole when an agent buys the wrong thing: agent liability is unresolved.",
+  "23": "Oct 28: Fed decision and the FDA rare disease framework feedback meeting. Oct 29: Lilly Q3 earnings. Rates, regulation and the defensive pharma trade within 48 hours.",
+  "24": "Jio anchor book Oct 19, public bids Oct 21–23. Alberta votes Monday on starting a process toward independence; the Economist expects it to fail.",
+  "25": "November 15. Forty AI, biotech and solar technologies proposed for the restricted (licence needed) or prohibited (cannot leave) export catalogue."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 19) {
+    bucketText = "Bucket: 19–25 — You internalized the material. You could brief a partner this morning.";
+  } else if (correct >= 14) {
+    bucketText = "Bucket: 14–18 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 9) {
+    bucketText = "Bucket: 9–13 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 9 — Re-listen at 0.9x with the script open. Quiz again tomorrow.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
