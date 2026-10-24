@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — 2026-10-24</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Saturday, October 24, 2026 — Episode Daily_Reading_2026-10-24.mp3</div>
+    <div class="meta">
+      <span>24 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+  <div class="q" data-id="1" data-keys="2.6;1.2;7663;meta" data-threshold="3">
+    <div class="q-text"><span class="q-num">1.</span> How much did the Nasdaq and S&amp;P 500 fall on the worst day since June, where did the S&amp;P close, and what triggered it?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="114;may" data-threshold="1">
+    <div class="q-text"><span class="q-num">2.</span> What level did Brent crude break, and when was it last there?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="airport;pipeline" data-threshold="1">
+    <div class="q-text"><span class="q-num">3.</span> What specific targets did Iran threaten if the US and Israel resume attacks?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="119;5;a1" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> Give France&#x27;s gross debt to GDP, its deficit, and the Moody&#x27;s rating it was expected to be cut to.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="14;6.35" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> Where did Russia&#x27;s central bank hold its policy rate, and what was annual inflation to September?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="43;10.2;6.9;0.57" data-threshold="3">
+    <div class="q-text"><span class="q-num">6.</span> What did Takeda and Innovent&#x27;s gastric cancer ADC show in Phase III (risk reduction, median survival, hazard ratio)?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="55;40;813" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> How much of Roche&#x27;s Zymeworks deal is upfront and near-term money versus the headline?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="23;two;credential" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> What happened with LiteLLM on October 21st, and how widely used is it?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="40;medicaid" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> In the WSJ analysis of PE-backed autism therapy providers, how many hours a week were children billed, and from which payer&#x27;s data?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks and mechanisms</h2>
+  <div class="q" data-id="10" data-keys="price;risk;yield;refinanc" data-threshold="3">
+    <div class="q-text"><span class="q-num">10.</span> Explain why a riskier borrower&#x27;s bond yield rises, and why that matters for France specifically.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="straight-line;evenly;scarc" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> What does it mean that GPU rental rates sit 9% to 143% above a straight-line depreciation path?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="collateral;lend;debt" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> Why do GPU rental rates matter for AI credit, e.g. CoreWeave-style borrowers?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="incremental;next;today;own" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> How does the episode reconcile appreciating chips with the market punishing Meta for buying more?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="utilization;hours;skilled;labor" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> What did capacity-utilization and ADP data say about how producers met AI demand, and what does it imply?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="ceiling;utilization;payer;need" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> What diligence lesson does the PE autism therapy story teach about reimbursement?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Cross-temporal connections</h2>
+  <div class="q" data-id="16" data-keys="5.3;below 5;flight" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> Trace the ten-year yield over October and what it says about the AI trade.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="oil;inflation;december" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> How does Brent at $114 cut against the flight-to-quality move heading into the Oct 27-28 FOMC?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="php;nsa;revenue;sold" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> Connect the PHP bug, the NSA advisory, LiteLLM and cyber stock performance. What is the gap?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="up to;upfront;milestone" data-threshold="2">
+    <div class="q-text"><span class="q-num">19.</span> What discrepancy appeared in the Gilead/PepStar coverage between Friday and today?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="relative;priced;august" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> What does today&#x27;s coverage add to Friday&#x27;s Moderna story, and how does it link to Edlich&#x27;s PE essay?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items and judgment</h2>
+  <div class="q" data-id="21" data-keys="licens;equity" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> On the Treasury outbound biotech proposal, what one question decides whether it is a footnote or a thesis-killer?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="floor;supply;cheap" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> Why might Gilead&#x27;s $1.28B for a Phase I asset start to look like a floor rather than aggressive?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="23" data-keys="write;before;december" data-threshold="2">
+    <div class="q-text"><span class="q-num">23.</span> What should you do before the Fed decision on Oct 27-28, and why?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="24" data-keys="a100;roll;oldest" data-threshold="2">
+    <div class="q-text"><span class="q-num">24.</span> What would falsify the bullish read on GPU scarcity?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 24 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>18–24 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>13–17 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>8–12 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "Nasdaq down 2.6%, S&P 500 down 1.2% to 7,663, after Meta guided to heavy AI capital spending.",
+  2: "Above $114 a barrel, the first time since May, driven by Middle East conflict risk rather than demand.",
+  3: "Gulf airports and pipelines, i.e. economic and civilian targets, which turns geopolitics into an energy and shipping-insurance story.",
+  4: "Debt 119% of GDP, deficit above 5%, Moody's expected to cut from Aa3 to A1. French 10-year yields topped 5%.",
+  5: "Held at 14%; inflation reaccelerated to 6.35% from 5.3% in May, partly from refinery strikes lifting fuel costs.",
+  6: "43% lower risk of death, median OS 10.2 vs 6.9 months, HR 0.57, in 464 patients in Japan and China.",
+  7: "$55M upfront plus $40M at Phase Ib start (about $95M near term) versus an $813M headline.",
+  8: "For about two hours, a PyPI release carried a credential stealer (cloud creds, API keys, SSH keys, .env files) that ran whenever Python started. About 23 million weekly downloads. Second compromise this year, via build tooling.",
+  9: "Up to 40 hours a week, from Medicaid billings of five of the largest PE-backed providers.",
+  10: "Investors pay less for a riskier bond; a lower price mechanically means a higher yield to maturity. France rolls over a lot of debt, so higher yields raise the deficit, which raises risk and yields again. That loop is what the agencies grade.",
+  11: "Straight-line spreads cost evenly over useful life. Rents above that line mean the market thinks the chips are scarcer and will stay useful longer than the accounting assumes.",
+  12: "GPUs are collateral. Lenders care what chips are worth in year three or four; firm rents on old chips support collateral value and the debt behind it.",
+  13: "Rising rents reward whoever owns capacity today; they say nothing about the return on the next dollar of capacity. Existing chips can be scarce while the incremental buildout overshoots, as with fiber in 2000.",
+  14: "They ran plants harder rather than build (electrical-equipment capacity fell), imports filled gaps, hours per worker rose faster than headcount, switchers got a ~5-point wage premium. A skilled-labor shortage and an inflation and buildout constraint, not a jobs apocalypse.",
+  15: "A reimbursement ceiling becomes a utilization target. Ask whether volume is set by clinical need or by the payer's maximum.",
+  16: "Above 5.3% (highest since 2002) around Oct 1, taxing leveraged AI players; below 5% on Oct 22 as the AI sell-off drove a flight to quality. AI went from what rates threatened to what moves rates.",
+  17: "Flight to quality pushes yields down; an oil shock lifts inflation expectations and yields. Minutes had pointed to December as the live hike date, and higher oil makes December more likely.",
+  18: "Thursday an AI found a critical PHP bug; today the NSA said take systems offline if you cannot patch, and LiteLLM was compromised. Yet cyber stocks sold off in October with little revenue acceleration. Visible risk, unrealized spending: that gap is where mispricing lives.",
+  19: "Friday's coverage said up to $1.28B (milestones implied); today's said $1.28B all cash, all upfront. Very different deals; treat structure as unverified until the company release.",
+  20: "The 42% is a relative risk reduction and beat benchmarks, but August's detail-free 'breakthrough' release priced in a miracle. Like PE's record 11.8x entry multiples, a price that requires perfection punishes even good outcomes: entry discipline is the alpha.",
+  21: "Whether it covers licensing and co-development or only equity investment. Licensing is how most cross-border biotech flow happens.",
+  22: "If the cheap supply of Chinese-originated assets is restricted, remaining supply gets pricier, so high prices for early assets become the new floor.",
+  23: "Write down your own call on what $114 oil does to December hike odds before the decision, then compare. Committing in advance is how you learn from the result.",
+  24: "Rental rates on the oldest chips (A100s) rolling over first; when the marginal scarce asset cheapens, the shortage is ending. Also remember a16z's conflict and that spot prices describe this quarter, not year four.",
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 18) {
+    bucketText = "Bucket: 18–24 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 13) {
+    bucketText = "Bucket: 13–17 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 8) {
+    bucketText = "Bucket: 8–12 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 8 — Re-listen at 0.9x with the script open. Quiz again Tuesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
