@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — 2026-10-26</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Monday, October 26, 2026 — Episode Daily_Reading_2026-10-26.mp3</div>
+    <div class="meta">
+      <span>25 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+  <div class="q" data-id="1" data-keys="30;ten;two thirds" data-threshold="2">
+    <div class="q-text"><span class="q-num">1.</span> What year-over-year earnings growth do analysts expect for the S&amp;P 500 in Q3, and how many companies account for about two thirds of it?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="one in four;tariff;petrol;big beautiful" data-threshold="3">
+    <div class="q-text"><span class="q-num">2.</span> What share of Americans can&#x27;t pay all their bills, per the Washington Post, and which three policy elements did the Economist&#x27;s Trumponomics gauge combine?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="111;5;2002" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> What is France&#x27;s projected net debt, and what did its ten-year yield just do?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="healey;burnham" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> Who presents Britain&#x27;s budget on Wednesday, for which government?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="44;58;eight" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> Give the death-risk reductions for Roche&#x27;s divarasib and Amgen&#x27;s Imdelltra, and the added survival for Imdelltra.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="53;progression-free;gastric" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> What did AstraZeneca&#x27;s Claudin 18.2 ADC show, and what did it miss?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="death;septic pneumonia;chemotherapy" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What did the BMS multiple sclerosis CAR-T study disclose, and from what cause?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="43;45;87" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> In the MemoryTax study, what did a weak model&#x27;s memory graph score when read by itself, by a strong model, and what did a strong model score with its own memory?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks and mechanisms</h2>
+  <div class="q" data-id="9" data-keys="weighted;median;megacap" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> Why can index earnings growth look spectacular while the typical company is flat?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="consumption tax;spend;deduct" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> Explain why a tariff-plus-deductions package can test out as regressive.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="fixed;capital;monetary;reserves" data-threshold="3">
+    <div class="q-text"><span class="q-num">11.</span> What is the impossible trinity, and what does defending a currency level cost?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="breakage;expire;interchange" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> What is breakage, and why do max-value redeemers threaten premium card economics?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="interest;growth;debt" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> What does r versus g mean for a country&#x27;s debt?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="crossover;post-progression;underpowered" data-threshold="1">
+    <div class="q-text"><span class="q-num">14.</span> Why does a win on overall survival without a win on progression-free survival deserve skepticism?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="absolute;endpoint;safety;risk tolerance" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> What are the four questions to ask of any trial readout?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="conditional;evidence;review" data-threshold="2">
+    <div class="q-text"><span class="q-num">16.</span> What is managed access, and how does it change a health-AI diligence?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="softmax;logit;energy;mahalanobis" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> Why do classifiers struggle to say &#x27;I don&#x27;t know&#x27;, and name two fixes.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections</h2>
+  <div class="q" data-id="18" data-keys="meta;debt;concentrat" data-threshold="2">
+    <div class="q-text"><span class="q-num">18.</span> Trace the AI trade across Saturday, Sunday and Monday.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="protest;budget;yield;interest" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> Draw the full France chain from street to spreadsheet.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="incyte;audi;relative" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> How does today&#x27;s &#x27;what is underneath the average&#x27; theme extend Sunday&#x27;s &#x27;number on the page is not the number in the bank&#x27;?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="21" data-keys="lefkofsky;investor;customer;nvidia" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> What related-party structure links BMS, Pathos AI and Tempus, and what earlier example has the same shape?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items</h2>
+  <div class="q" data-id="22" data-keys="real;yield;fiscally" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> Which two Brazilian prices do you check after the runoff, and what does it mean if both rally?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="23" data-keys="capital spending;cloud;financ;microsoft" data-threshold="3">
+    <div class="q-text"><span class="q-num">23.</span> What three columns go in your big-tech earnings note, and for which companies?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="24" data-keys="gdp;household;hawkish" data-threshold="2">
+    <div class="q-text"><span class="q-num">24.</span> What question do you add to your Fed call before Thursday&#x27;s GDP print?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="25" data-keys="recruiting panel;speedrun;g55" data-threshold="1">
+    <div class="q-text"><span class="q-num">25.</span> What should you decide today about this week&#x27;s Wharton events?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 25 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>18–25 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>13–17 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>8–12 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "About 30% year over year, with roughly two thirds of that growth coming from just ten companies, mostly tied to the AI trade.",
+  2: "One in four. The gauge combined tariffs, petrol prices and the One Big Beautiful Bill Act; bottom deciles lose, the top gains.",
+  3: "Net debt projected past 111% of GDP; the ten-year yield broke 5% for the first time since 2002.",
+  4: "Chancellor John Healey, presenting the Burnham government's first budget, promising a 'buffer against uncertainty'.",
+  5: "Divarasib: 44% in previously treated KRAS G12C lung cancer. Imdelltra: 58% as maintenance in small-cell lung cancer, with more than eight months of added overall survival.",
+  6: "A 53% reduction in risk of death in heavily pretreated gastric cancer, but it missed on progression-free survival.",
+  7: "A patient death from septic pneumonia the day after high-dose chemotherapy, 44 days after infusion of a CD19-directed CAR-T.",
+  8: "43% read by the weak model, only 45% read by a strong model, and 87% when the strong model wrote and read its own graph.",
+  9: "Index earnings growth is a market-cap-weighted sum, not a median, so a few megacaps growing fast dominate the number.",
+  10: "A tariff is a consumption tax passed into shelf prices, hitting households that spend most of their income hardest; deductions only help those with enough taxable income to deduct against.",
+  11: "A country can have only two of: a fixed exchange rate, free capital flows, independent monetary policy. Defending a level means burning reserves, raising rates or restricting flows, each a tax on growth.",
+  12: "Breakage is the expected share of points that expire unused; issuers book points as a liability expecting breakage. Cards are funded by interchange plus annual fee, so customers who redeem everything at max value erode the margin.",
+  13: "When the interest rate on debt (r) exceeds the economy's growth rate (g), the debt ratio rises on its own even with a balanced day-to-day budget.",
+  14: "PFS more directly measures tumor control. An OS win without PFS often points to post-progression effects, crossover, or an underpowered PFS analysis.",
+  15: "Absolute benefit (not relative); do the endpoints agree; safety versus competitors in class; does the patient population's risk tolerance match the drug's toxicity.",
+  16: "Conditional reimbursement in exchange for mandatory real-world evidence, reviewed at the end of the window. Diligence asks what share of revenue is conditional, what the evidence bar is and who set it, and what happens if the review goes badly.",
+  17: "Softmax forces probabilities over known classes to sum to one, so unfamiliar inputs get assigned confidently to the nearest class. Fixes: maximum logit scores, energy-based scoring, Mahalanobis distance.",
+  18: "Saturday: Meta's capex plans triggered the Nasdaq's worst day since June. Sunday: the Economist named AI companies' debt. Monday: two thirds of S&P earnings growth sits in ten mostly-AI firms. Spending up, debt-funded, earnings concentrated.",
+  19: "Protests raise the odds of a populist, looser-budget government; looser budgets push yields up; higher yields raise interest costs on a 100%+ of GDP debt stock, narrowing fiscal room.",
+  20: "Incyte's 'up to $2bn', Audi's $4.2bn of intention, and a 44% relative risk reduction are all headlines where the cash or absolute value sits far below the number.",
+  21: "Pathos and Tempus share founder Eric Lefkofsky; BMS is an investor in Pathos and a customer of Tempus. Same shape as Nvidia funding a free model that creates demand for its chips: not arm's-length.",
+  22: "The real against the dollar and the ten-year local bond yield. Both moving against Brazil signals the twin-risk premium; both rallying means the market read the result as fiscally safer.",
+  23: "Capex guidance, cloud revenue growth, and how the spending is financed, for Microsoft, Alphabet and Amazon.",
+  24: "Whether a strong GDP number alongside weak household finances makes the Fed more hawkish or less; write the answer before the data.",
+  25: "Whether the Startup Recruiting Panel (Wed noon, JMHH G55) or the a16z speedrun session (Thu, already on calendar) is worth the hour.",
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 18) {
+    bucketText = "Bucket: 18–25 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 13) {
+    bucketText = "Bucket: 13–17 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 8) {
+    bucketText = "Bucket: 8–12 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 8 — Re-listen at 0.9x with the script open. Quiz again Tuesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>

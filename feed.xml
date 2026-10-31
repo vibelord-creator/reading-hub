@@ -4,10 +4,10 @@
     <title>Anurag Daily Reading</title>
     <link>https://vibelord-creator.github.io/reading-hub/</link>
     <language>en-us</language>
-    <description>Daily audio digest.</description>
-    <lastBuildDate>Sun, 25 Oct 2026 19:47:02 -0400</lastBuildDate>
+    <description>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</description>
+    <lastBuildDate>Sat, 31 Oct 2026 18:22:27 -0400</lastBuildDate>
     <itunes:author>Anurag Maken</itunes:author>
-    <itunes:summary>Daily audio digest.</itunes:summary>
+    <itunes:summary>A daily McKinsey-partner-level audio digest of the news, frameworks, and cross-temporal threads from your reading list.</itunes:summary>
     <itunes:type>episodic</itunes:type>
     <itunes:owner>
       <itunes:name>Anurag Maken</itunes:name>
@@ -26,6 +26,32 @@
     <itunes:category text="Business">
       <itunes:category text="Entrepreneurship"/>
     </itunes:category>
+    <item>
+      <title>Daily Reading - 2026-10-31</title>
+      <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-31.html</link>
+      <description>Daily digest for 2026-10-31. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-31.html</description>
+      <pubDate>Sat, 31 Oct 2026 05:30:00 -0400</pubDate>
+      <guid isPermaLink="false">2026-10-31-Daily_Reading_2026-10-31.mp3</guid>
+      <enclosure url="https://vibelord-creator.github.io/reading-hub/Daily_Reading_2026-10-31.mp3" length="7151895" type="audio/mpeg"/>
+      <itunes:duration>19:51</itunes:duration>
+      <itunes:author>Anurag Maken</itunes:author>
+      <itunes:summary>Daily digest for 2026-10-31. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-31.html</itunes:summary>
+      <itunes:image href="https://vibelord-creator.github.io/reading-hub/cover.jpg"/>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Daily Reading - 2026-10-26</title>
+      <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-26.html</link>
+      <description>Daily digest for 2026-10-26. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-26.html</description>
+      <pubDate>Mon, 26 Oct 2026 05:30:00 -0400</pubDate>
+      <guid isPermaLink="false">2026-10-26-Daily_Reading_2026-10-26.mp3</guid>
+      <enclosure url="https://vibelord-creator.github.io/reading-hub/Daily_Reading_2026-10-26.mp3" length="7660071" type="audio/mpeg"/>
+      <itunes:duration>21:16</itunes:duration>
+      <itunes:author>Anurag Maken</itunes:author>
+      <itunes:summary>Daily digest for 2026-10-26. Quiz: https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-26.html</itunes:summary>
+      <itunes:image href="https://vibelord-creator.github.io/reading-hub/cover.jpg"/>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
     <item>
       <title>Daily Reading - 2026-10-25</title>
       <link>https://vibelord-creator.github.io/reading-hub/Quiz_2026-10-25.html</link>
