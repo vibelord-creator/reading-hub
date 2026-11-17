@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — November 16, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Monday, November 16, 2026 — Episode Daily_Reading_2026-11-16.mp3 (yesterday's reading, revisited)</div>
+    <div class="meta">
+      <span>25 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+    <h2>Section A — Recall (numbers and facts)</h2>
+
+  <div class="q" data-id="1" data-keys="70;78;1.3;1.45;ANT" data-threshold="3">
+    <div class="q-text"><span class="q-num">1.</span> What share price range and implied valuation did Anthropic file for, and under what ticker?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="33.2;1200" data-threshold="2">
+    <div class="q-text"><span class="q-num">2.</span> How much revenue did Anthropic report for the first nine months of 2026, and how fast was it growing?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="13;8" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> How much did Nvidia fall on the week, and what did the PHLX Semiconductor index do?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="kress;chair" data-threshold="2">
+    <div class="q-text"><span class="q-num">4.</span> Who is Nvidia&#x27;s interim CEO, and what governance change did the board make the same week?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="five;wiring" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> How long was the FAA nationwide ground stop, and what was ultimately blamed?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="19;outlook;teams" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> How long was the Microsoft outage and which products went down?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="july" data-threshold="1">
+    <div class="q-text"><span class="q-num">7.</span> Until when can states now postpone full implementation of tougher Medicaid work requirements?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="948;1280;3100" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> GPT-6 Cyber patched how many Linux kernel vulnerabilities in one run, at what cost each (vs July)?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="9" data-keys="12;19" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> Google search revenue growth slowed to what rate, from what in the prior quarter?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="marsh;accel;alliant;melcher" data-threshold="3">
+    <div class="q-text"><span class="q-num">10.</span> Name the two insurance-broker acquisitions in the roll-up story.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks</h2>
+
+  <div class="q" data-id="11" data-keys="substitute;one company;one person" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> Define a single point of failure, and give the two levels at which it applied to Nvidia.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="cash flow;individual" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> What is key-person risk, and why does it lower valuation even when nothing physical changes?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="market-cap;weight" data-threshold="1">
+    <div class="q-text"><span class="q-num">13.</span> Why can one large company falling drag a US index down even when most rivals rise?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="growth;margin;cost of capital" data-threshold="3">
+    <div class="q-text"><span class="q-num">14.</span> A valuation multiple is a compressed forecast. Name the three variables the Anthropic bull/bear debate comes down to.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="small;back office;multiple arbitrage" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> Describe the PE roll-up model and the name for the gap it exploits.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="16" data-keys="own;ai mode;orforglipron;zepbound" data-threshold="3">
+    <div class="q-text"><span class="q-num">16.</span> What is cannibalisation, and give the Google and Lilly examples.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="paperwork;coverage" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> What is administrative churn, and where in the patient funnel does it create a leak?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="blackstone;1.5;milestone;royalt" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> What is structured royalty financing, using the Pfizer-Blackstone deal?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Connections</h2>
+
+  <div class="q" data-id="19" data-keys="resign;cabinet;policy" data-threshold="2">
+    <div class="q-text"><span class="q-num">19.</span> Trace how the Huang story moved from Thursday to Sunday, and what risk it became.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="3.7;two-year;rate;discount" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> Connect Thursday&#x27;s inflation data and the Anthropic IPO.</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="21" data-keys="ownership;risk" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> How do Pfizer and Anthropic represent two answers to the same capital question?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="measles;8;3" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> What forecast from Thursday resolved by Sunday, and what figures supported it?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="23" data-keys="clean data;poison;tripl" data-threshold="2">
+    <div class="q-text"><span class="q-num">23.</span> What counterintuitive Anthropic research finding is a useful line for AI-governance conversations?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items</h2>
+
+  <div class="q" data-id="24" data-keys="guidance;supplier risk" data-threshold="2">
+    <div class="q-text"><span class="q-num">24.</span> What two things should you write down as predictions before tomorrow&#x27;s Nvidia call?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="25" data-keys="july;re-enrol;arkansas" data-threshold="2">
+    <div class="q-text"><span class="q-num">25.</span> What should your note to the ZS team on Medicaid say, and what precedent should you cite?</div>
+    <textarea placeholder="Your answer" rows="3"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 25 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>18–25 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>13–17 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>8–12 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "Ticker ANT on Nasdaq, $70–78 a share, 825m shares, implying a $1.3–1.45 trillion valuation.",
+  2: "$33.2B in the first nine months of 2026, growth over 1,200% year on year.",
+  3: "Nvidia down 13%; the PHLX Semiconductor index rose 8% as money rotated into AMD and Broadcom.",
+  4: "CFO Colette Kress is interim CEO; the board appointed its first-ever chair.",
+  5: "Almost five hours, only the second nationwide ground stop since 9/11. Ultimately blamed on scheduled replacement of old legacy wiring (initially framed as a telecom outage).",
+  6: "About 19 hours; Outlook, Teams and Copilot were down worldwide. Nothing malicious per Microsoft.",
+  7: "Until July.",
+  8: "948 root-level vulnerabilities, about $1,280 each, down from roughly $3,100 in July.",
+  9: "12%, down from 19% (and 17% the quarter before), even as query volume grew at its fastest rate in five years.",
+  10: "Marsh bought Accel Holdings (Iowa); Alliant took Melcher & Prescott (New Hampshire).",
+  11: "A dependency with no substitute, where one failure takes the whole system down. Level 1: the AI industry concentrated its key input in one company (Nvidia). Level 2: Nvidia concentrated decisions in one person (Huang) with no public succession plan.",
+  12: "A company's value depends on one individual; if expected future cash flows depend on that person, their departure lowers what investors should pay even though no factory or product changed.",
+  13: "The big indices are market-cap weighted, so each company moves the index in proportion to its size.",
+  14: "Growth duration, margin structure, and cost of capital. The episode suggests naming growth duration as the deciding variable.",
+  15: "Buy many small firms at low earnings multiples, consolidate back offices, sell the combined business at a higher multiple because size commands a premium. The gap is multiple arbitrage.",
+  16: "A new product taking revenue from your own existing product. Google: AI Mode queries show fewer, cheaper ads. Lilly: oral orforglipron (43.8% cut in apnoea events) would compete with its own injectable Zepbound.",
+  17: "Eligible people losing coverage because of paperwork rather than income. It leaks at the coverage step, months after the patient is on therapy, showing up as discontinuation and re-enrolment work for hubs and specialty pharmacies.",
+  18: "Blackstone funds up to $1.5B of berobenatide trials and is paid from milestones and royalties; Pfizer keeps ownership. It behaves like debt for cash flow but is priced for development risk, moving trial cost off Pfizer's books without dilution.",
+  19: "Thursday: Economist leader says Huang must resign; lawmakers push chip export restrictions. Saturday: Huang out, Kress interim. Sunday: reaches the cabinet with Bessent vs Lutnick. It moved from governance risk to policy/political risk in four days.",
+  20: "Core inflation ran at 3.7% annualised over three months, two-year yields had their biggest one-day jump since April 2025, and a December hike is assumed. Higher rates raise the discount rate on long-duration assets, so Anthropic is pricing into the most expensive capital window of the cycle.",
+  21: "Pfizer moves risk without giving up ownership (royalty financing). Anthropic sells ownership at scale via IPO. Both respond to expensive capital.",
+  22: "America losing measles elimination status. Thursday cited 8 measles-related deaths in 2026 versus 3 between 2000 and 2025; Sunday confirmed the revocation.",
+  23: "Adding clean data to poisoned training sets can triple misalignment. Controls need testing, not assuming.",
+  24: "Whether Kress holds guidance with the same confidence, and whether anyone on the call (or the labs) starts talking about supplier risk.",
+  25: "Frame the delay as a planning window to July; propose re-enrolment workflows for hub programmes in Medicaid-heavy brands; cite Arkansas 2018 (about 18,000 lost coverage, mostly for reporting reasons)."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 18) {
+    bucketText = "Bucket: 18–25 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 13) {
+    bucketText = "Bucket: 13–17 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 8) {
+    bucketText = "Bucket: 8–12 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 8 — Re-listen at 0.9x with the script open. Quiz again Tuesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>

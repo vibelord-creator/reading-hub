@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — 2026-11-10</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Tuesday, November 10, 2026 — Episode Daily_Reading_2026-11-10.mp3</div>
+    <div class="meta">
+      <span>24 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 10–12 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+  <div class="q" data-id="1" data-keys="two months;january;24;port fees;rare" data-threshold="3">
+    <div class="q-text"><span class="q-num">1.</span> How long is the China trade truce extension, and what three measures are on hold?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="5.7;0.7;margin;weak demand" data-threshold="3">
+    <div class="q-text"><span class="q-num">2.</span> What were China&#x27;s producer and consumer price inflation numbers, and what does the gap signal?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="third;three years;carry" data-threshold="3">
+    <div class="q-text"><span class="q-num">3.</span> What share of Blackstone real estate&#x27;s senior managing directors have left, over what period, and why?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="five years;5 years;five;5" data-threshold="1">
+    <div class="q-text"><span class="q-num">4.</span> What is the average wait to connect a new project to the US power grid, per the a16z permitting piece?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="naion;vision;126;134" data-threshold="3">
+    <div class="q-text"><span class="q-num">5.</span> What did the FDA order on GLP-1 drugs, and on what evidence base?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="hims;sleep apnoea;sleep apnea;foundayo;year-end;year end" data-threshold="3">
+    <div class="q-text"><span class="q-num">6.</span> What new channel and new indication did Lilly announce for its obesity drugs?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="tumour;tumor;vector;integrat;gene therapy;aav" data-threshold="3">
+    <div class="q-text"><span class="q-num">7.</span> What is the FDA examining with Zolgensma, and why does it matter beyond Novartis?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="5530;5,530;glucagon;glp-1;file" data-threshold="2">
+    <div class="q-text"><span class="q-num">8.</span> How large was survodutide&#x27;s cardiovascular safety trial, and what kind of drug is it?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks and mechanisms</h2>
+  <div class="q" data-id="9" data-keys="shock;long-run;2;don&#x27;t move;barely" data-threshold="2">
+    <div class="q-text"><span class="q-num">9.</span> What does it mean for inflation expectations to be &quot;anchored&quot;?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="nominal;inflation-protected;tips;gap;difference" data-threshold="2">
+    <div class="q-text"><span class="q-num">10.</span> How is a breakeven inflation rate constructed?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="risk premium;liquidity;memory;3.7;hiking" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> Give two reasons the SF Fed&#x27;s &quot;stronger anchor&quot; finding could be overstated.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="five-year five-year;5y5y;forward;independence" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> What indicator would falsify the anchored-expectations view, according to the episode?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="term premium;discount rate;terminal value;15;20" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> Why does a loose inflation anchor matter for a PE exit multiple?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="three cents;restaurant;basket;advertising;ads" data-threshold="3">
+    <div class="q-text"><span class="q-num">14.</span> How do DoorDash and Instacart each earn about three cents per order dollar, by different routes?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="surrogate;lp(a);il-6;marker;events" data-threshold="3">
+    <div class="q-text"><span class="q-num">15.</span> What is a surrogate endpoint, and what did pelacarsen and ziltivekimab show about it?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Cross-temporal connections</h2>
+  <div class="q" data-id="16" data-keys="pilot;quadruple;2.5 trillion;correction;governors;grid" data-threshold="3">
+    <div class="q-text"><span class="q-num">16.</span> Trace the AI capital cycle from November 1 to today in four data points.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="bargaining chips;overreaction;five-year;either way" data-threshold="2">
+    <div class="q-text"><span class="q-num">17.</span> How does today&#x27;s permitting piece complicate James Mackintosh&#x27;s Monday argument?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="rainmaker;20;30;carry;pool;stars" data-threshold="3">
+    <div class="q-text"><span class="q-num">18.</span> Link the Weil collapse (Monday) to the Blackstone exits (today). What is the common economics?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="senate;confirm;backstop;anchor;trust" data-threshold="3">
+    <div class="q-text"><span class="q-num">19.</span> How do yesterday&#x27;s Democratic Senate story and today&#x27;s Warsh story fit together rather than conflict?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="1.2;weak demand;export;surplus;january" data-threshold="3">
+    <div class="q-text"><span class="q-num">20.</span> What links Monday&#x27;s China surplus number to today&#x27;s truce and price data?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items and judgment</h2>
+  <div class="q" data-id="21" data-keys="3.7;breakeven;flat;hot" data-threshold="3">
+    <div class="q-text"><span class="q-num">21.</span> When October CPI prints, what comparison should you make, and how do you read the result?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="peak;lunch;weekend;uber;premium" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> Give the strongest argument against the DoorDash-Instacart deal.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="23" data-keys="naion;pharmacy;pbm;direct" data-threshold="2">
+    <div class="q-text"><span class="q-num">23.</span> What two lines should you add to any GLP-1 or obesity diligence checklist?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="24" data-keys="local;communities;backlash;judicial;governors" data-threshold="2">
+    <div class="q-text"><span class="q-num">24.</span> Give the strongest argument against the a16z permitting fix.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div>Score</div>
+    <div class="score-big"><span id="scoreCorrect">0</span> / 24 correct · <span id="scorePartial">0</span> partial</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>18–25 correct:</strong> You internalized the material. You could brief a partner Monday morning.</li>
+      <li><strong>13–17 correct:</strong> Solid recall but the cross-article connections need another pass.</li>
+      <li><strong>8–12 correct:</strong> Skim the script transcript before re-listening — frameworks need a second pass.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open. Quiz again Tuesday.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "Two months, until at least <strong>January</strong>. On hold: a <strong>24%</strong> tariff hike, port fees on US ships, and the end of some rare-earth export waivers.",
+  2: "Producer prices rose <strong>5.7%</strong> on energy costs; consumer prices only <strong>0.7%</strong>. The gap means manufacturers are absorbing the squeeze in their margins because <strong>weak demand</strong> stops them passing costs on, which pushes them to export harder.",
+  3: "Nearly <strong>a third</strong> in <strong>three years</strong>. Fund returns fell, so the <strong>carry</strong> pool (partners' share of profits) shrank, and high borrowing costs mean no quick way to mark assets up and sell.",
+  4: "About <strong>five years</strong> on average. For a data centre needing new power, that queue, not the chips, is the critical path.",
+  5: "A class-wide warning for <strong>NAION</strong> (non-arteritic anterior ischemic optic neuropathy), a rare cause of sudden permanent <strong>vision</strong> loss, based on a review of <strong>126</strong> trials covering more than <strong>134,000</strong> patients.",
+  6: "Zepbound and Foundayo will be sold through <strong>Hims &amp; Hers</strong>. Lilly plans a <strong>year-end</strong> FDA filing for <strong>Foundayo</strong> (orforglipron) in obstructive <strong>sleep apnoea</strong>, backed by the ATTAIN-OSA trials in JAMA.",
+  7: "Reports of <strong>tumours</strong> in treated patients; in two cases the <strong>vector</strong> DNA had <strong>integrated</strong> into the patient's genome. It challenges the long-term safety assumption under the whole <strong>AAV gene therapy</strong> field.",
+  8: "A Phase III trial of <strong>5,530</strong> adults. Survodutide is a <strong>glucagon/GLP-1</strong> dual agonist, the first of its class to show heart safety. Not a home run, but Boehringer will <strong>file</strong>.",
+  9: "When a <strong>shock</strong> hits, short-run inflation jumps but <strong>long-run</strong> expectations barely move, because people believe the Fed will bring inflation back to <strong>2%</strong>. Since expectations feed into price and wage setting, an anchor is self-reinforcing.",
+  10: "Take the yield on an ordinary (<strong>nominal</strong>) Treasury and subtract the yield on an <strong>inflation-protected</strong> bond (TIPS) of the same maturity. The <strong>gap</strong> approximates expected average inflation over that period.",
+  11: "(1) Breakevens contain an inflation <strong>risk premium</strong> and a <strong>liquidity</strong> premium that could mask a real shift. (2) The anchor may reflect <strong>memory</strong> of the 2022-23 <strong>hiking</strong> cycle rather than the institution. (3) Realised CPI was <strong>3.7%</strong> in September, so the anchor is being tested.",
+  12: "If <strong>five-year, five-year-forward</strong> breakevens drift up on news about Fed <strong>independence</strong> rather than economic data, the anchor was always about trust and trust is being drawn down.",
+  13: "A loose anchor widens the <strong>term premium</strong>, raising the long-end <strong>discount rate</strong>. A one-point rise on a business growing 4% can cut <strong>terminal value</strong> by roughly <strong>15-20%</strong>. Anchored expectations are a hidden subsidy to long-duration assets.",
+  14: "Both keep a little over <strong>three cents</strong> per dollar. DoorDash: many small <strong>restaurant</strong> orders with high fees per dollar. Instacart: large grocery <strong>baskets</strong> at lower fee rates plus <strong>advertising</strong>.",
+  15: "A <strong>surrogate</strong> is a lab measure that stands in for a clinical outcome. Pelacarsen sharply cut <strong>Lp(a)</strong> and ziltivekimab cut <strong>IL-6</strong> inflammation, but neither reduced cardiovascular <strong>events</strong>. Moving a <strong>marker</strong> is not helping patients.",
+  16: "Nov 1: Nasdaq's worst day since June, OpenAI raised under half of $30bn, McKinsey says <strong>pilot</strong>-to-production roughly <strong>quadruples</strong> cost. Nov 8: <strong>$2.5 trillion</strong> lost in a week, Nasdaq in <strong>correction</strong>. Nov 9: data-centre selloff on new <strong>governors</strong>' bans. Nov 10: five-year <strong>grid</strong> queues and Nvidia governance probe.",
+  17: "Mackintosh argued the governors' bans may be <strong>bargaining chips</strong>, making the selloff an <strong>overreaction</strong>. But even without bans the grid queue is already <strong>five years</strong>, so the power constraint is real <strong>either way</strong>; politics only decides how much worse.",
+  18: "Megafirms pay <strong>$20-30m</strong> per <strong>rainmaker</strong>, breaking Weil's partnership; Blackstone loses SMDs as the <strong>carry</strong> pool shrinks. When <strong>stars</strong> can capture their value elsewhere, a shared <strong>pool</strong> only holds while it is growing.",
+  19: "A Democratic <strong>Senate</strong> must <strong>confirm</strong> Fed board appointees, an institutional <strong>backstop</strong> that helps keep expectations <strong>anchored</strong> even as the Warsh call story raises questions about <strong>trust</strong> in independence.",
+  20: "Monday: China on track to beat a <strong>$1.2trn</strong> surplus, over \u20ac1bn a day against the EU. Today: <strong>weak demand</strong> (PPI 5.7 vs CPI 0.7) pushes factories to <strong>export</strong>, growing the <strong>surplus</strong>. The truce is a pause until <strong>January</strong>, not an exit.",
+  21: "Compare to September's <strong>3.7%</strong>, then check long-run <strong>breakevens</strong>. A <strong>hot</strong> print with <strong>flat</strong> breakevens supports the anchored thesis; both rising means revisit it.",
+  22: "Grocery and restaurant demand <strong>peak</strong> at different times (meal times vs <strong>weekends</strong>/evenings), so the shared-driver density gain may be small. Announced savings barely cover the <strong>premium</strong>, and <strong>Uber</strong>, a well-capitalised rival, looked and passed.",
+  23: "The class-wide <strong>NAION</strong> warning, and whether the business depends on the <strong>pharmacy</strong>-benefit (<strong>PBM</strong>) channel that Lilly is routing around with <strong>direct</strong>-to-consumer sales.",
+  24: "Faster approvals with less <strong>judicial</strong> review shift risk onto <strong>local communities</strong>, and that <strong>backlash</strong> is part of why <strong>governors</strong> are campaigning against data centres in the first place.",
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 18) {
+    bucketText = "Bucket: 18–25 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 13) {
+    bucketText = "Bucket: 13–17 — Solid recall; re-listen to the cross-article connections (Section C).";
+  } else if (correct >= 8) {
+    bucketText = "Bucket: 8–12 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 8 — Re-listen at 0.9x with the script open. Quiz again Tuesday.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
