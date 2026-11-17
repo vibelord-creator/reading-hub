@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Reading Quiz — November 17, 2026</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #161b22;
+    --panel-2: #1c232c;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 6rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .95rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: .75rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 .75rem;
+    padding: .5rem .75rem;
+    background: var(--panel-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .q {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .q-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: .4rem;
+  }
+  .q-text { font-size: .98rem; }
+  textarea {
+    width: 100%;
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+    font-family: inherit;
+    font-size: .95rem;
+    margin-top: .75rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .feedback {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(63, 185, 80, 0.12); border: 1px solid rgba(63, 185, 80, 0.35); }
+  .feedback.partial { background: rgba(210, 153, 34, 0.12); border: 1px solid rgba(210, 153, 34, 0.35); }
+  .feedback.missed { background: rgba(248, 81, 73, 0.12); border: 1px solid rgba(248, 81, 73, 0.35); }
+  .feedback .verdict { font-weight: 600; margin-bottom: .35rem; }
+  .feedback.correct .verdict { color: var(--green); }
+  .feedback.partial .verdict { color: var(--amber); }
+  .feedback.missed .verdict { color: var(--red); }
+  .feedback .key-terms { color: var(--muted); font-size: .82rem; margin-top: .3rem; }
+  .feedback .answer { margin-top: .35rem; color: var(--text); }
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 85%, rgba(15,18,22,0));
+    padding: 1rem 0 .5rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    padding: .7rem 1.2rem;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .score-panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .score-panel.show { display: block; }
+  .score-big { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .score-detail { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+  .bucket { margin-top: .75rem; font-size: .92rem; }
+  .scoring-guide {
+    margin-top: 2rem;
+    padding: 1rem 1.2rem;
+    background: var(--panel-2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .scoring-guide h3 { margin-top: 0; font-size: 1rem; }
+  .scoring-guide ul { margin: .5rem 0; padding-left: 1.4rem; }
+  .scoring-guide li { margin: .2rem 0; color: var(--muted); font-size: .88rem; }
+  .hint { font-size: .82rem; color: var(--muted); margin-top: .3rem; font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Reading Comprehension Quiz</h1>
+    <div class="sub">Tuesday, November 17, 2026 — Episode Daily_Reading_2026-11-17.mp3</div>
+    <div class="meta">
+      <span>24 questions</span>
+      <span>4 sections</span>
+      <span>Suggested time: 12–15 min</span>
+    </div>
+  </header>
+
+  <p style="color: var(--muted); font-size: .92rem;">
+    Type what you remember. Click <strong>Grade</strong> when done. Feedback is keyword-based:
+    <span style="color: var(--green);">green</span> = hit the key terms,
+    <span style="color: var(--amber);">amber</span> = partial,
+    <span style="color: var(--red);">red</span> = missed. You'll see the full answer either way.
+  </p>
+
+  <h2>Section A — Recall (numbers and facts)</h2>
+  <div class="q" data-id="1" data-keys="62" data-threshold="1">
+    <div class="q-text"><span class="q-num">1.</span> How much did the president's stake in Nvidia grow to before the scandal broke?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="2" data-keys="outside" data-threshold="1">
+    <div class="q-text"><span class="q-num">2.</span> What did Treasury Secretary Bessent say about Nvidia's CEO search?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="3" data-keys="two dozen;loophole;china" data-threshold="2">
+    <div class="q-text"><span class="q-num">3.</span> How many companies will the administration name as AI 'national champions', and what is the same-week restriction?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="4" data-keys="tenth;10" data-threshold="1">
+    <div class="q-text"><span class="q-num">4.</span> What share of the S&amp;P 500 is tied to three men with no clear successors?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="5" data-keys="800;quarter" data-threshold="2">
+    <div class="q-text"><span class="q-num">5.</span> What did Fed Vice Chair Bowman say about AI borrowing and inflation?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="6" data-keys="3.2;80;50" data-threshold="2">
+    <div class="q-text"><span class="q-num">6.</span> New World Development: how much is it raising, at what discount, and what happened to the shares?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="7" data-keys="68;14" data-threshold="2">
+    <div class="q-text"><span class="q-num">7.</span> What did CG Oncology's cretostimogene show in PIVOT-006, and how did the stock react?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="8" data-keys="411;32;2;30" data-threshold="3">
+    <div class="q-text"><span class="q-num">8.</span> Give the headline value and upfront for Biogen-TRIMTECH and Novartis-OBI.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section B — Frameworks and mechanisms</h2>
+  <div class="q" data-id="9" data-keys="market value;proportion" data-threshold="1">
+    <div class="q-text"><span class="q-num">9.</span> What is a cap-weighted index, and why does it turn one succession surprise into a market event?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="10" data-keys="upfront;milestone;royalt" data-threshold="3">
+    <div class="q-text"><span class="q-num">10.</span> Name the three layers of a pharma licensing deal, and what 'biobucks' means.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="11" data-keys="8;1.5;option" data-threshold="2">
+    <div class="q-text"><span class="q-num">11.</span> Compute upfront as a share of headline for Biogen and Novartis. What does that tell you?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="12" data-keys="risk;accounting;signal" data-threshold="2">
+    <div class="q-text"><span class="q-num">12.</span> Give three reasons companies structure deals with small upfronts and big milestones.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="13" data-keys="dilut;proportion;signal" data-threshold="2">
+    <div class="q-text"><span class="q-num">13.</span> How does a rights issue work, and why does a deep discount crush the share price?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="14" data-keys="ten;inflation-adjusted;noncyclical unemployment" data-threshold="2">
+    <div class="q-text"><span class="q-num">14.</span> What is CAPE, and what did the SF Fed find is its strongest driver?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="15" data-keys="extra interest;government bond;widen" data-threshold="2">
+    <div class="q-text"><span class="q-num">15.</span> What is a credit spread, and why does it matter for the AI build-out now?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section C — Cross-temporal connections</h2>
+  <div class="q" data-id="16" data-keys="resign;export;governance;numbers" data-threshold="3">
+    <div class="q-text"><span class="q-num">16.</span> Trace the Nvidia story from Sunday's reading to today. What stage comes next?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="17" data-keys="40;33.2;300;lock-up" data-threshold="3">
+    <div class="q-text"><span class="q-num">17.</span> How has the Anthropic IPO story evolved since the S-1, and what supply risk did today add?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="18" data-keys="17;5.9;1.5;option" data-threshold="2">
+    <div class="q-text"><span class="q-num">18.</span> Connect Monday's a16z pharma piece to Lilly's deals today.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="19" data-keys="july;crush;hub" data-threshold="2">
+    <div class="q-text"><span class="q-num">19.</span> Which two Medicaid stories point the same way, and who bears the cost?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="20" data-keys="1280;3100;caching" data-threshold="2">
+    <div class="q-text"><span class="q-num">20.</span> How did the AI security cost curve move, and what correction applies to 'cheaper per token'?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <h2>Section D — Action items and judgment</h2>
+  <div class="q" data-id="21" data-keys="guidance;orders;export" data-threshold="2">
+    <div class="q-text"><span class="q-num">21.</span> What three things should you listen for on Nvidia's call tonight?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="22" data-keys="cuda;90;institutional" data-threshold="2">
+    <div class="q-text"><span class="q-num">22.</span> Give the strongest argument against the 'Nvidia without Huang is broken' thesis.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="23" data-keys="30;growth;lock-up" data-threshold="2">
+    <div class="q-text"><span class="q-num">23.</span> Before Thursday, what two questions should your Anthropic view answer?</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="q" data-id="24" data-keys="scarcity;preclinical;tight" data-threshold="2">
+    <div class="q-text"><span class="q-num">24.</span> Give the strongest argument against dismissing big biobucks headlines.</div>
+    <textarea placeholder="Your answer"></textarea>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div class="score-big"><span id="scoreCorrect">0</span> / 24</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="bucket" id="scoreBucket"></div>
+    <div class="score-detail" style="margin-top:.5rem;">Partial credit: <span id="scorePartial">0</span></div>
+  </div>
+
+  <div class="actions">
+    <button id="gradeBtn">Grade my quiz</button>
+    <button id="resetBtn" class="secondary">Reset</button>
+    <span class="score-detail" id="progressText" style="margin-left:auto;"></span>
+  </div>
+
+  <div class="scoring-guide">
+    <h3>Self-scoring buckets</h3>
+    <ul>
+      <li><strong>18–24 correct:</strong> You internalized the material. You could brief a partner tomorrow morning.</li>
+      <li><strong>13–17 correct:</strong> Solid recall but the cross-temporal connections need another pass.</li>
+      <li><strong>8–12 correct:</strong> Skim the script transcript before re-listening.</li>
+      <li><strong>Below 8:</strong> Re-listen at 0.9x with the script open.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Full answers keyed by question id
+const ANSWERS = {
+  1: "As much as <strong>$62 million</strong>, per the Washington Post. The point is the mechanism: a regulator with a financial interest in the regulated company makes policy less predictable.",
+  2: "He warned against Huang's return and said Nvidia should <strong>look outside the company</strong> for its next chief executive, erasing the line between policy and corporate governance.",
+  3: "<strong>More than two dozen</strong> US companies, Nvidia among them, will get help winning business overseas. In the same week Commerce was ordered to <strong>close the chip export loophole</strong> on AI chip sales to <strong>China</strong>. Promotion and restriction together is the definition of industrial policy.",
+  4: "Nearly <strong>a tenth</strong> of the index, per the Washington Post.",
+  5: "AI-related borrowing will pass <strong>$800 billion</strong> this year, and AI price pressure explains roughly <strong>a quarter</strong> of above-target core inflation. The debt figure is a measurement; the inflation attribution is a fragile model output.",
+  6: "About <strong>$3.2 billion</strong> via a rights issue at roughly <strong>80%</strong> below the prior close; shares dropped nearly <strong>50%</strong>.",
+  7: "Cut bladder cancer recurrence risk by <strong>68%</strong> versus surveillance; the stock rose about <strong>14%</strong>.",
+  8: "Biogen-TRIMTECH: up to <strong>$411 million</strong> with up to <strong>$32 million</strong> upfront. Novartis-OBI: potentially over <strong>$2 billion</strong> with <strong>$30 million</strong> upfront.",
+  9: "Each company counts in <strong>proportion to its market value</strong>. A stock worth 7% of the index falling 10% moves the whole index about 0.7% on its own, so a boardroom shock at a giant becomes a market-wide event.",
+  10: "<strong>Upfront</strong> (cash at signing), <strong>milestones</strong> (paid only if trials, approvals or sales thresholds hit), <strong>royalties</strong> (a percentage of any sales). Biobucks is the headline total assuming everything works.",
+  11: "Biogen about <strong>8%</strong>; Novartis about <strong>1.5%</strong>. At those ratios the deal is an <em>option</em>, not an acquisition; risk-adjusted value is a small fraction of the headline, especially with fewer than 10% of clinical candidates approved.",
+  12: "<strong>Risk sharing</strong> (buyer pays only when the science works), <strong>accounting optics</strong> (contingent payments do not hit the books like a cash acquisition), and <strong>signalling</strong> (the seller announces a big number ahead of its next raise).",
+  13: "Existing owners can buy new shares in <strong>proportion</strong> to their holdings; those who do not take up rights are <strong>diluted</strong>. A deep discount is a <strong>signal</strong> the company needed cash badly enough to price for a guaranteed raise.",
+  14: "Price divided by average <strong>inflation-adjusted</strong> earnings over <strong>ten</strong> years. The strongest driver since 1961 is the <strong>noncyclical unemployment</strong> rate; employers value a new hire much like investors value a stock. Correlation, not causation, and not a crash call.",
+  15: "The <strong>extra interest</strong> a company pays over a safe <strong>government bond</strong> of the same maturity. With $800bn of AI borrowing, if lenders get nervous spreads <strong>widen</strong> and the build-out gets more expensive, turning a valuation correction into a credit event.",
+  16: "Sunday: Huang <strong>resigned</strong>, Kress interim, first-ever chair, Bessent vs Lutnick. Monday: the backdoor route via Asian partners and Malaysia. Today: <strong>export</strong> loophole closed, national champion, Bessent says hire outside, campaign to bring Huang back. Scandal to blame to policy to <strong>governance</strong> fight; next is the <strong>numbers</strong> on tonight's call.",
+  17: "Oct 28 S-1: <strong>$40 trillion</strong> TAM on $16.3B H1 revenue. By Sunday: ANT, $70-78, 825m shares, $1.3-1.45T, <strong>$33.2B</strong> nine-month revenue. Monday: retail hot on IPO, cool on AI. Today: <strong>300+</strong> investors set to win big; their <strong>lock-up</strong> expiry is a future supply overhang.",
+  18: "Monday: Lilly's GLP-1 franchise did about <strong>$17B</strong> in Q3, a hits business on an annuity. Today Lilly buys <strong>options</strong> on the next hit: up to <strong>$5.9B</strong> for Stipple and up to <strong>$1.5B</strong> for preclinical Calytrix, a sign the late-stage market is tight.",
+  19: "Sunday: work-requirement implementation delayable until <strong>July</strong>. Today: the CMS <strong>CRUSH</strong> fraud rule (about $90B claimed savings, treat sceptically). Both mean more administrative friction, landing on specialty pharmacy and <strong>hub</strong> programmes as discontinuation and re-enrolment work.",
+  20: "Sunday: exploits found and patched at about <strong>$1,280</strong> each, down from <strong>$3,100</strong> in July; today a16z calls for a rebuild of the security stack. Correction: Nvidia's context compaction broke prompt <strong>caching</strong>, so costs rose on one benchmark even as tokens fell. Cheaper per token is not always cheaper per task.",
+  21: "Forward <strong>guidance</strong>; any sign customer <strong>orders</strong> were paused or delayed; and management's view of the new China <strong>export</strong> rule's revenue effect. Skip the scandal questions.",
+  22: "Its moat (<strong>CUDA</strong>, customer relationships, about <strong>90%</strong> of AI data-centre chips) is now <strong>institutional</strong>, not personal. Founder dependence is often overpriced at the moment of crisis; the test is whether customers paused orders.",
+  23: "At roughly <strong>30x</strong> annualised sales, what <strong>growth</strong> rate must persist for five years to justify the price; and what happens when 300+ early holders hit <strong>lock-up</strong> expiry.",
+  24: "Headlines show what the buyer thinks the platform is worth if it works. Lilly paying up to $1.5B for a <strong>preclinical</strong> asset signals the late-stage market is <strong>tight</strong>: real <strong>scarcity</strong>. Ask upfront, stage, and upfront-to-total ratio rather than ignoring the number."
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[,$%]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function matchKeys(userInput, keys) {
+  const norm = normalize(userInput);
+  if (!norm) return 0;
+  let hits = 0;
+  for (const k of keys) {
+    const needle = normalize(k);
+    if (!needle) continue;
+    if (norm.includes(needle)) hits++;
+  }
+  return hits;
+}
+
+function gradeOne(qEl) {
+  const ta = qEl.querySelector("textarea");
+  const fb = qEl.querySelector(".feedback");
+  const id = qEl.dataset.id;
+  const keys = (qEl.dataset.keys || "").split(";").filter(Boolean);
+  const threshold = parseInt(qEl.dataset.threshold || "1", 10);
+  const hits = matchKeys(ta.value, keys);
+  const totalKeys = keys.length;
+  const fullAnswer = ANSWERS[id] || "";
+
+  let verdictClass = "missed";
+  let verdictText = "Missed";
+  let scoreCategory = "missed";
+
+  if (ta.value.trim().length === 0) {
+    verdictClass = "missed";
+    verdictText = "No answer";
+    scoreCategory = "missed";
+  } else if (hits >= threshold) {
+    verdictClass = "correct";
+    verdictText = `Correct (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "correct";
+  } else if (hits > 0) {
+    verdictClass = "partial";
+    verdictText = `Partial (${hits}/${totalKeys} key terms)`;
+    scoreCategory = "partial";
+  }
+
+  fb.className = "feedback show " + verdictClass;
+  fb.innerHTML = `
+    <div class="verdict">${verdictText}</div>
+    <div class="answer"><strong>Full answer:</strong> ${fullAnswer}</div>
+    <div class="key-terms">Key terms looked for: ${keys.join(", ")}</div>
+  `;
+
+  return scoreCategory;
+}
+
+function grade() {
+  const qs = document.querySelectorAll(".q");
+  let correct = 0;
+  let partial = 0;
+  let missed = 0;
+  qs.forEach((q) => {
+    const cat = gradeOne(q);
+    if (cat === "correct") correct++;
+    else if (cat === "partial") partial++;
+    else missed++;
+  });
+  const total = qs.length;
+
+  const panel = document.getElementById("scorePanel");
+  panel.classList.add("show");
+  document.getElementById("scoreCorrect").textContent = correct;
+  document.getElementById("scorePartial").textContent = partial;
+  document.getElementById("scoreDetail").textContent =
+    `${correct} correct · ${partial} partial · ${missed} missed out of ${total}`;
+
+  let bucketText = "";
+  if (correct >= 18) {
+    bucketText = "Bucket: 18–24 — You internalized the material. You could brief a partner Monday morning.";
+  } else if (correct >= 13) {
+    bucketText = "Bucket: 13–17 — Solid recall; re-listen to the cross-temporal connections (Section C).";
+  } else if (correct >= 8) {
+    bucketText = "Bucket: 8–12 — Skim the script; frameworks need another pass.";
+  } else {
+    bucketText = "Bucket: Below 8 — Re-listen at 0.9x with the script open. Quiz again tomorrow.";
+  }
+  document.getElementById("scoreBucket").textContent = bucketText;
+
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function reset() {
+  document.querySelectorAll(".q").forEach((q) => {
+    q.querySelector("textarea").value = "";
+    const fb = q.querySelector(".feedback");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+  });
+  const panel = document.getElementById("scorePanel");
+  panel.classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("gradeBtn").addEventListener("click", grade);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+// Live progress
+const progress = document.getElementById("progressText");
+function updateProgress() {
+  const tas = document.querySelectorAll("textarea");
+  let filled = 0;
+  tas.forEach((t) => { if (t.value.trim()) filled++; });
+  progress.textContent = `${filled} / ${tas.length} answered`;
+}
+document.querySelectorAll("textarea").forEach((t) => {
+  t.addEventListener("input", updateProgress);
+});
+updateProgress();
+</script>
+</body>
+</html>
